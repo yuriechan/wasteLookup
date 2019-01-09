@@ -1,0 +1,15 @@
+header {
+  background-image: linear-gradient(71deg,#084E8A,#108043);
+}
+
+h2 {
+  color: white;
+  font-family: Siro;
+}
+
+.btn {
+  background-color: #108043;
+  background-image: url(../image/search-icon.png);
+  background-repeat: no-repeat;
+  width: 3em;
+}
