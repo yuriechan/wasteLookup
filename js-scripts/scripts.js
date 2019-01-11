@@ -28,141 +28,38 @@ fetch(Url)
     let body = document.createElement('textarea');
     title.innerHTML += post.title;
     body.innerHTML += post.body;
-    // encodedString += textArea.value;
-    // console.log(textArea.value);
     return {title: title.value, body: body.value, keywords: post.keywords};
   })
-  //
-  // console.log(encodedString);
-  // Post(encodedString);
-  Post(data);
+
+  $('#getPosts').click(function(){
+    Post(data);
+  })
+
+  $('#getPosts').keydown(function(event){
+    if (event.keyCode === 13){
+      Post(data);
+    }
+  })
+
 
 })
 .catch(error => console.log(error))
 
 
 
-
-// function Post (encodedString) {
-//   //let test = '<ul> <li>Place item in the <strong>Garbage Bin.</strong></li> </ul>'
-//   //let test = '&lt;ul&gt; &lt;li&gt;Place item in the &lt;strong&gt;Garbage Bin.&lt;/strong&gt;&lt;/li&gt; &lt;/ul&gt;'
-//   //console.log(data)
-//   let output = '<h2>Posts</h2>';
-//   encodedString.forEach(function(element){
-//     output += `
-//       <div>
-//         <h3>${element.title}</h3>
-//         <p>${element.body}<p>
-//       </div>
-//     `;
-//   });
-//    $('#output').html(output).text();
-// }
-
-
-
 function Post (data) {
 
-
-  let output = '<h2>Posts</h2>';
+  let output = '';
   data.forEach(function(element){
     output += `
-      <div data-keywords="${element.keywords}">
-        <h3>${element.title}</h3>
-        ${element.body}
+      <div class="container" data-keywords="${element.keywords}">
+        <div class="row">
+        <div class="col">${element.title}</div>
+        <div class="col">${element.body}</div>
+        </div>
       </div>
     `;
   });
   $('#output').html(output);
+
 }
-
-
-//
-// function decodeEntities (encodedString) {
-//   let textArea = document.createElement('textarea');
-//   textArea.innerHTML = encodedString;
-//   return textArea.value;
-// }
-
-
-
-
-// let decodeEntities = (function(){
-//   let element = document.createElement('div');
-//
-//   function decodeHTMLEntities (str) {
-//     if (str && typeof str === 'string') {
-//       str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
-//       str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
-//       element.innerHTML = str;
-//       str = element.textContent;
-//       element.textContent = '';
-//     }
-//     return str;
-//   }
-//   return decodeHTMLEntities;
-// })();
-
-// function convertHTML(str) {
-//   // &colon;&rpar;
-//
-//   if (str.indexOf("&") != -1) {
-//     str=str.replace(/&/g, "&amp;");
-//   }
-//
-//   if (str.indexOf("<") != -1) {
-//     str=str.replace(/</g, "&lt;");
-//   }
-//
-//   if (str.indexOf(">") != -1) {
-//     str=str.replace(/>/g, "&gt;");
-//   }
-//
-//   if (str.indexOf('"') != -1) {
-//     str=str.replace(/"/g, "&quot;");
-//   }
-//
-//   if (str.indexOf("'") != -1) {
-//     str=str.replace(/'/g, "&apos;");
-//   }
-//
-//   return str;
-// }﻿
-//
-// function htmlDecode(input){
-//   var e = document.createElement('div');
-//   e.innerHTML = input;
-//   // handle case of empty input
-//   return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-// }
-
-
-
-
-// function replaceNbsps (data) {
-//   return data.toString().replace(/&nbsp;/g, '');
-// }
-// $(document).on('load', function(){
-// console.log('hi')
-//
-//   document.getElementById('getPosts').addEventListener('click', getPosts);
-//     console.log('test')
-//   function getPosts () {
-//     console.log('test')
-//     fetch('https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000')
-//     .then((res) => res.json())
-//     .then((data) => {
-//       let output = '<h2>Posts</h2>';
-//       data.forEach(function(post){
-//         output += `
-//           <div>
-//             <h3>${post.title}</h3>
-//             <p>${post.body}</p>
-//           </div>
-//         `;
-//       });
-//       document.getElementById('output').innerHTML = output;
-//     })
-//   }
-//
-// })
