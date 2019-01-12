@@ -27,7 +27,8 @@ fetch(Url)
 
   $('#getPosts').click(function(){
       // Post(data);
-      getUserInputValue();
+      // getUserInputValue();
+      // storeMatchedPost(pushKeywordToArray, getUserInputValue)
   })
 
   $('#getPosts').keydown(function(event){
@@ -37,7 +38,8 @@ fetch(Url)
     }
   })
 
-  pushKeywordToArray();
+  pushKeywordToArray('metal lids');
+  // storeMatchedPost(pushKeywordToArray)
    // Search();
    // console.log(data[0]['keywords'])
    // console.log(data[0])
@@ -86,7 +88,7 @@ function Search (userInput) {
 
 }
 
-function pushKeywordToArray () {
+function pushKeywordToArray (userInput) {
   let parentArr = [];
   let childArr = [];
   for (let index in dataSet) {
@@ -95,10 +97,21 @@ function pushKeywordToArray () {
       childArr = $container.split(", ");
       parentArr.push(childArr)
       //console.log(childArr)
-      console.log(parentArr[0])
-      return parentArr;
+      //console.log(parentArr[0])
   }
-  // console.log(arr[1])
+  console.log(parentArr)
+  //return parentArr;
+
+  for (let index in dataSet) {
+    let keywords = parentArr[index].length
+    //console.log(keywords)
+    for (let i = 0; i <= keywords; i++){
+      if (userInput === parentArr[index][i]){
+        console.log('same')
+      }
+    }
+  }
+
 }
 
 // function searchMatchingPost (userInput, arr) {
@@ -106,15 +119,19 @@ function pushKeywordToArray () {
 // }
 
 
-function storeMatchedPost (twoDimentionalArr, userInput) {
-  let matchedElement = [];
-  for (let index in dataSets){
-    if (userInput == twoDimentionalArr[index]){
-
-    }
-  }
-
-}
+// function storeMatchedPost (twoDimentionalArr) {
+//   //let matchedElement = [];
+//   console.log(twoDimentionalArr[0])
+//
+//   // for (let index in dataSet){
+//   //      let keywords = twoDimentionalArr[index].length;
+//   //     console.log('index: ' + index)
+//   //     for (let i = 0; i <= keywords; i++){
+//   //       console.log('items: ' + i)
+//   //     }
+//   // }
+//
+// }
 
 // questions:
 // why array is automatically empty after first itiration
