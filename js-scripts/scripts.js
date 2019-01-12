@@ -1,18 +1,6 @@
-// let request = new XMLHttpRequest();
-//
-// request.open('GET', 'https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000', true);
-// request.onload = function () {
-//
-//   let data = JSON.parse(this.response);
-//   if (request.status >= 200 && request.status < 400) {
-//     //data.forEach()
-//     console.log(data)
-//   }
-// }
-//
-// request.send();
-let numberOfPosts = 0;
 
+let numberOfPosts = 0;
+// let dataSet;
 
 const Url = 'https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000';
 
@@ -21,6 +9,7 @@ fetch(Url)
    return res.json()
 })
 .then(data => {
+  // console.log(data)
   numberOfPosts = data.length;
 
   data = data.map(function(post){
@@ -28,9 +17,11 @@ fetch(Url)
     let body = document.createElement('textarea');
     title.innerHTML += post.title;
     body.innerHTML += post.body;
-     console.log({title: title.value, body: body.value, keywords: post.keywords}.length);
+
     return {title: title.value, body: body.value, keywords: post.keywords};
   })
+
+  // dataSet = data;
 
   $('#getPosts').click(function(){
       Post(data);
@@ -43,14 +34,11 @@ fetch(Url)
       getUserInputValue();
     }
   })
-  //
-  // $(document).on('ready', function(){
-  //   numberOfPosts = $("div[class*='post']").length;
-  // })
-
-  Search(data);
 
 
+   Search(data);
+   // console.log(data[0]['keywords'])
+   // console.log(data[0])
 })
 .catch(error => console.log(error))
 
@@ -78,9 +66,18 @@ function Post (data) {
   return data;
 }
 
-function Search (data) {
+function Search (dataSets) {
 
-    for (let i = 0; i < numberOfPosts + 1; i++){
-        console.log(data + 'index: ' + i)
+    for (let index in dataSets){
+      console.log('index: ' + index)
+        for (let dataSet of dataSets){
+          console.log(dataSet)
+        }
+    }
+}
+
+function getKeyWordArray (ArrayOfObject) {
+    for (let index in ArrayOfObject){
+      ArrayOfObject[index]['keywords']
     }
 }
