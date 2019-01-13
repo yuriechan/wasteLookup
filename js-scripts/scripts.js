@@ -3,6 +3,7 @@ let numberOfPosts = 0;
 let dataSet = '';
 
 
+
 const Url = 'https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000';
 
 fetch(Url)
@@ -23,7 +24,7 @@ fetch(Url)
     post.keywords = post.keywords.split(", ").join(" ");
 
     // console.log(post.keywords)
-    console.log({title: title.value, body: body.value, keywords: post.keywords})
+    // console.log({title: title.value, body: body.value, keywords: post.keywords})
     return {title: title.value, body: body.value, keywords: post.keywords};
   })
 
@@ -39,7 +40,8 @@ fetch(Url)
 
 
   $('#getPosts').click(function(){
-    search(getUserQuery())
+    renderResults(search(getUserQuery()))
+
       // Post(data);
       // getUserInputValue();
       // storeMatchedPost(pushKeywordToArray, getUserInputValue)
@@ -59,7 +61,7 @@ fetch(Url)
 
 
 
-function postHiddenData (data) {
+const postHiddenData = (data) => {
   let index = 0;
   let output = '';
 
@@ -94,29 +96,47 @@ const getUserQuery = () => {
 }
 
 const search = (query) => {
-  let resultArr = [];
+  let allResultsArr = [];
   let title = $("div[class*='title']");
-  let keyword = $()
+  let keyword = $("div[class*='keyword']");
+
   //console.log(titleText.eq(0).closest("div[class*='keyword']").html())
   //console.log(titleText.eq(2).closest("div:has([class*='keyword'])").attr('id'))
   for (let arrIndex in query){
     //console.log(arrIndex)
     let eachQuery = query[arrIndex];
     let eachQueryInReg = new RegExp(eachQuery,"g");
-    console.log(eachQueryInReg)
+    //console.log(eachQueryInReg)
     for (let dataIndex in dataSet){
       //console.log(titleText.eq(index).text());
-      console.log(title.eq(dataIndex).text())
+      //console.log(title.eq(dataIndex).text())
       if (title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg) !== null){
 
-        console.log('same title text found!')
-        resultArr.push(dataIndex);
-         console.log(resultArr);
+        //console.log('same title text found!')
+        allResultsArr.push(dataIndex);
+         //console.log(allResultsArrr);
       }
-      // if ()
+
+      if (keyword.eq(dataIndex).data("keywords").match(eachQueryInReg) !== null) {
+          //console.log(keyword.eq(dataIndex).data("keywords"))
+        allResultsArr.push(dataIndex);
+      }
+
     }
   }
+      //console.log(allResultsArr);
+      let uniqueResultsArr = [...new Set(allResultsArr)]
+      //console.log(uniqueResultsArr)
+      return uniqueResultsArr;
+}
 
+
+const renderResults = (arr) => {
+  console.log(arr)
+  for (let index in arr) {
+    console.log(index)
+    $("div[id=" + arr[index] + "]").removeAttr("style");
+  }
 }
 
 function pushKeywordToArray () {
