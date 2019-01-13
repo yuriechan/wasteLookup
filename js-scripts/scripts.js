@@ -10,7 +10,7 @@ fetch(Url)
    return res.json()
 })
 .then(data => {
-  // console.log(data)
+
   numberOfPosts = data.length;
 
   data = data.map(function(post){
@@ -21,11 +21,18 @@ fetch(Url)
 
     return {title: title.value, body: body.value, keywords: post.keywords};
   })
+
   dataSet = data;
-  Post(data);
+  //post all data hidden
+  // Post(data)
+  // pushKeywordToArray();
+  // console.log(dataSet)
+
+  //show data which contains userinput
 
 
   $('#getPosts').click(function(){
+    getUserQuery()
       // Post(data);
       // getUserInputValue();
       // storeMatchedPost(pushKeywordToArray, getUserInputValue)
@@ -34,32 +41,23 @@ fetch(Url)
   $('#getPosts').keydown(function(event){
     if (event.keyCode === 13){
       // Post(data);
-      getUserInputValue();
+      // getUserInputValue();
     }
   })
 
-  pushKeywordToArray('metal lids');
-  // storeMatchedPost(pushKeywordToArray)
-   // Search();
-   // console.log(data[0]['keywords'])
-   // console.log(data[0])
+
 })
 .catch(error => console.log(error))
 
 
-function getUserInputValue () {
-  let userInput = $('#userInput').val()
-  return userInput;
-}
 
-
-function Post (data) {
+function postHiddenData (data) {
   let index = 0;
   let output = '';
   data.forEach(function(element){
 
     output += `
-      <div style="display:none" class="container post" data-keywords="${element.keywords}" id="${index}">
+      <div style="display:none" class="container post" data-keywords="${element.keywords}" data-title="${element.title}" id="${index}">
         <div class="row">
         <div class="col">${element.title}</div>
         <div class="col">${element.body}</div>
@@ -71,67 +69,74 @@ function Post (data) {
   });
 
   $('#output').html(output);
-  return data;
 }
 
-function Search (userInput) {
-  let arr = [];
-  for (let index in dataSet) {
-      let $container = $("div[id*="+ index +"]").data("keywords");
-      console.log($container)
-      arr = $container.split(" ");
-      console.log(arr)
-      // return arr;
-  }
 
-
-
+function getUserQuery () {
+  let userInput = $('#userInput').val().toLowerCase().split(" ");
+  let uniqueUserInput = [...new Set(userInput)];
+  console.log(uniqueUserInput)
+  return uniqueUserInput;
 }
 
-function pushKeywordToArray (userInput) {
+
+function pushKeywordToArray () {
   let parentArr = [];
   let childArr = [];
+
   for (let index in dataSet) {
       let $container = $("div[id*="+ index +"]").data("keywords");
-      //console.log($container)
       childArr = $container.split(", ");
       parentArr.push(childArr)
-      //console.log(childArr)
-      //console.log(parentArr[0])
   }
+  //return two dimentional array with all keyword for each html element
   console.log(parentArr)
-  //return parentArr;
+  return parentArr;
+}
 
+
+function isMatchingKeyword () {
+  let matchedElement = [];
   for (let index in dataSet) {
     let keywords = parentArr[index].length
     //console.log(keywords)
     for (let i = 0; i <= keywords; i++){
       if (userInput === parentArr[index][i]){
-        console.log('same')
+        matchedElement.push(index)
+        //console.log('same')
+      } else {
+        //console.log('not same')
       }
     }
+    //console.log(matchedElement[0])
   }
+  //
+  // $("div[id*="+ matchedElement[0] +"]").css("display", "unset");
+}
+
+
+
+
+function pushMatchedTitleToArray () {
 
 }
 
-// function searchMatchingPost (userInput, arr) {
-//   for (let )
-// }
+function pushTitleToArray () {
+
+}
 
 
-// function storeMatchedPost (twoDimentionalArr) {
-//   //let matchedElement = [];
-//   console.log(twoDimentionalArr[0])
-//
-//   // for (let index in dataSet){
-//   //      let keywords = twoDimentionalArr[index].length;
-//   //     console.log('index: ' + index)
-//   //     for (let i = 0; i <= keywords; i++){
-//   //       console.log('items: ' + i)
-//   //     }
-//   // }
-//
+// function Search () {
+//   let arr = [];
+//   for (let index in dataSet) {
+//       let $container = $("div[id*="+ index +"]").data("keywords");
+//       console.log($container)
+//       arr = $container.split(" ");
+//       console.log(arr)
+//       // return arr;
+//   }
 // }
+
 
 // questions:
 // why array is automatically empty after first itiration
