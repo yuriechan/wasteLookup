@@ -29,18 +29,24 @@ fetch(Url)
   dataSet = data;
 
   $('#getPosts').click(function(){
-
+    resetFocus();
     renderResults(search(getUserQuery()))
-    clearInputField();
+
+
   })
 
   $('#getPosts').keydown(function(event){
     if (event.keyCode === 13){
-
+      resetFocus();
       renderResults(search(getUserQuery()))
-      clearInputField();
+
 
     }
+  })
+
+
+  $('#userInput').on('input', () => {
+    hideAllPost();
   })
 
 
@@ -96,7 +102,6 @@ const search = (query) => {
       if (keyword.eq(dataIndex).data("keywords").match(eachQueryInReg) !== null) {
         allResultsArr.push(dataIndex);
       }
-
     }
   }
 
@@ -108,7 +113,6 @@ const search = (query) => {
 const renderResults = (arr) => {
   console.log(arr)
   for (let index in arr) {
-    console.log(index)
     $("div[id=" + arr[index] + "]").removeAttr("style");
   }
 }
@@ -117,7 +121,18 @@ const clearInputField = () => {
   $('#userInput').val("");
 }
 
+const resetFocus = () => {
+  $('#userInput').focus();
+}
 
+const hideAllPost = () => {
+
+  for (let index in dataSet) {
+    if ($("div[id=" + index + "]").not(['style'])){
+      $("div[id=" + index + "]").css("display","none");
+    }
+  }
+}
 
 
 
