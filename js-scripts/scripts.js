@@ -28,14 +28,14 @@ fetch(Url)
   postHiddenData(data)
   dataSet = data;
 
-  $('#getPosts').click(function(){
+  $('#getPosts').click(()=>{
     resetFocus();
     renderResults(search(getUserQuery()))
 
 
   })
 
-  $('#getPosts').keydown(function(event){
+  $('#getPosts').keydown((event)=>{
     if (event.keyCode === 13){
       resetFocus();
       renderResults(search(getUserQuery()))
@@ -64,6 +64,7 @@ const postHiddenData = (data) => {
     output += `
       <div style="display:none" class="container keyword" data-keywords="${element.keywords}" id="${index}">
         <div class="row">
+        <div class="col-1"><i class="fas fa-star fa-lg"></i></div>
         <div class="col title">${element.title}</div>
         <div class="col">${element.body}</div>
         </div>
@@ -79,7 +80,6 @@ const postHiddenData = (data) => {
 
 const getUserQuery = () => {
   let userInput = $('#userInput').val().toLowerCase().split(" ");
-  // let userInputArr = userInput.val().toLowerCase().split(" ");
   let uniqueUserInput = [...new Set(userInput)];
   return uniqueUserInput;
 }
