@@ -16,13 +16,20 @@ fetch(Url)
   data = data.map(function(post){
     let title = document.createElement('textarea');
     let body = document.createElement('textarea');
+
     title.innerHTML += post.title;
     body.innerHTML += post.body;
 
+    post.keywords = post.keywords.split(", ").join(" ");
+
+    // console.log(post.keywords)
+    console.log({title: title.value, body: body.value, keywords: post.keywords})
     return {title: title.value, body: body.value, keywords: post.keywords};
   })
 
+  postHiddenData(data)
   dataSet = data;
+
   //post all data hidden
   // Post(data)
   // pushKeywordToArray();
@@ -32,7 +39,7 @@ fetch(Url)
 
 
   $('#getPosts').click(function(){
-    getUserQuery()
+    search(getUserQuery())
       // Post(data);
       // getUserInputValue();
       // storeMatchedPost(pushKeywordToArray, getUserInputValue)
@@ -40,6 +47,7 @@ fetch(Url)
 
   $('#getPosts').keydown(function(event){
     if (event.keyCode === 13){
+      getUserQuery()
       // Post(data);
       // getUserInputValue();
     }
@@ -54,31 +62,62 @@ fetch(Url)
 function postHiddenData (data) {
   let index = 0;
   let output = '';
-  data.forEach(function(element){
+
+  //console.log(data[0].keywords)
+  // let container = $("div[id*="+ index +"]").data("keywords");
+  data.forEach((element) => {
+    // data[index].keywords.split(",")
+    // childArr = $container.split(", ");
 
     output += `
-      <div style="display:none" class="container post" data-keywords="${element.keywords}" data-title="${element.title}" id="${index}">
+      <div style="display:none" class="container keyword" data-keywords="${element.keywords}" id="${index}">
         <div class="row">
-        <div class="col">${element.title}</div>
+        <div class="col title">${element.title}</div>
         <div class="col">${element.body}</div>
         </div>
       </div>
     `;
 
     index++;
+    //console.log(element.keywords);
   });
 
   $('#output').html(output);
 }
 
 
-function getUserQuery () {
+const getUserQuery = () => {
   let userInput = $('#userInput').val().toLowerCase().split(" ");
   let uniqueUserInput = [...new Set(userInput)];
-  console.log(uniqueUserInput)
+  //console.log(uniqueUserInput)
   return uniqueUserInput;
 }
 
+const search = (query) => {
+  let resultArr = [];
+  let title = $("div[class*='title']");
+  let keyword = $()
+  //console.log(titleText.eq(0).closest("div[class*='keyword']").html())
+  //console.log(titleText.eq(2).closest("div:has([class*='keyword'])").attr('id'))
+  for (let arrIndex in query){
+    //console.log(arrIndex)
+    let eachQuery = query[arrIndex];
+    let eachQueryInReg = new RegExp(eachQuery,"g");
+    console.log(eachQueryInReg)
+    for (let dataIndex in dataSet){
+      //console.log(titleText.eq(index).text());
+      console.log(title.eq(dataIndex).text())
+      if (title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg) !== null){
+
+        console.log('same title text found!')
+        resultArr.push(dataIndex);
+         console.log(resultArr);
+      }
+      // if ()
+    }
+  }
+
+}
 
 function pushKeywordToArray () {
   let parentArr = [];
