@@ -1,10 +1,10 @@
-
+const Url = 'https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000';
 let numberOfPosts = 0;
 let dataSet = '';
 // let userInput = $('#userInput');
 
 
-const Url = 'https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000';
+
 
 fetch(Url)
 .then(res => {
