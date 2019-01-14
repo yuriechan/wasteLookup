@@ -20,7 +20,7 @@ fetch(Url)
 
     title.innerHTML += post.title;
     body.innerHTML += post.body;
-    post.keywords = post.keywords.split(", ").join(" ");
+    post.keywords = post.keywords.split(",").join(" ");
 
     return {title: title.value, body: body.value, keywords: post.keywords};
   })

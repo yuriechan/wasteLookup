@@ -1,10 +1,13 @@
+body {
+  font-family: Siro;
+}
+
 header {
   background-image: linear-gradient(71deg,#084E8A,#108043);
 }
 
 h2 {
   color: white;
-  font-family: Siro;
 }
 
 .btn {
@@ -13,4 +16,12 @@ h2 {
   background-repeat: no-repeat;
   background-size: 2.5em 2.5em;
   width: 3em;
+}
+
+h3 {
+  color: #108043;
+}
+
+#favorites-wrapper {
+  background-color: #E3F1DF;
 }
