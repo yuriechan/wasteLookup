@@ -18,6 +18,19 @@ h2 {
   width: 3em;
 }
 
+.fa-star {
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.fa-star:hover {
+  opacity: 0.6;
+}
+
+.fa-star:before {
+  color: #C4CDD5;
+}
+
 h3 {
   color: #108043;
 }
