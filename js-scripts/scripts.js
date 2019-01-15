@@ -28,7 +28,7 @@ fetch(Url)
   postHiddenData(data)
   dataSet = data;
 
-  $('#getPosts').click(()=>{
+  $('#getPosts').click(()=> {
     resetFocus();
     renderResults(search(getUserQuery()))
 
@@ -47,6 +47,12 @@ fetch(Url)
 
   $('#userInput').on('input', () => {
     hideAllPost();
+  })
+
+
+  $("i[class*='fa-star']").click(()=> {
+    // alert('hi')
+    changeToGreenStar();
   })
 
 
@@ -134,6 +140,28 @@ const hideAllPost = () => {
   }
 }
 
+const changeToGreenStar = () => {
+
+    
+    // if (!$(this).hasClass("clicked")){
+    //   alert('none')
+    // }
+    //
+    // if ($('i:not(.clicked)')){
+    //   alert('none')
+    // }
+
+    // if ($("i[class*='fa-star']").hasClass("clicked")){
+    //   alert('none')
+    // }
+
+    // if ($(this).hasClass("fas") || $(this).hasClass("fa-star") || $(this).hasClass("fa-lg") || $(this).hasClass("clicked")){
+    //   alert('none')
+    // }
+
+
+    console.log('executed')
+}
 
 
 // questions:

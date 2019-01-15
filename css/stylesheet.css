@@ -27,7 +27,7 @@ h2 {
   opacity: 0.6;
 }
 
-.fa-star:before {
+.fa-star {
   color: #C4CDD5;
 }
 
@@ -35,6 +35,10 @@ h3 {
   color: #108043;
 }
 
-#favorites-wrapper {
+#favorites-container {
   background-color: #E3F1DF;
+}
+
+.clicked {
+  color: #108043;
 }
