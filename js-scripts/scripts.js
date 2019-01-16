@@ -50,9 +50,14 @@ fetch(Url)
   })
 
 
-  $("i[class*='fa-star']").click(()=> {
+  // $("i[class*='fa-star']").click(()=> {
+  //   // alert('hi')
+  //   changeToGreenStar();
+  // })
+
+  $("i").click(function () {
     // alert('hi')
-    changeToGreenStar();
+    changeToGreenStar($(this));
   })
 
 
@@ -134,33 +139,24 @@ const resetFocus = () => {
 const hideAllPost = () => {
 
   for (let index in dataSet) {
-    if ($("div[id=" + index + "]").not(['style'])){
+    if ($("div[id=" + index + "]:not([style])")){
       $("div[id=" + index + "]").css("display","none");
+      console.log("display none")
     }
   }
 }
 
-const changeToGreenStar = () => {
-
-    
-    // if (!$(this).hasClass("clicked")){
-    //   alert('none')
-    // }
-    //
-    // if ($('i:not(.clicked)')){
-    //   alert('none')
-    // }
-
-    // if ($("i[class*='fa-star']").hasClass("clicked")){
-    //   alert('none')
-    // }
-
-    // if ($(this).hasClass("fas") || $(this).hasClass("fa-star") || $(this).hasClass("fa-lg") || $(this).hasClass("clicked")){
-    //   alert('none')
-    // }
+const changeToGreenStar = (obj) => {
+  let clone;
+    if (!obj.hasClass("clicked")){
+        // console.log('not clicked class');
+         obj.addClass("clicked");
+         clone = obj.parent().clone();
+         $('#favorites-list').html(clone);
+}
 
 
-    console.log('executed')
+    console.log('not green')
 }
 
 
