@@ -151,8 +151,8 @@ const changeToGreenStar = (obj) => {
     if (!obj.hasClass("clicked")){
         // console.log('not clicked class');
          obj.addClass("clicked");
-         clone = obj.parent().clone();
-         $('#favorites-list').html(clone);
+         clone = obj.parent().parent().clone();
+         $('#favorites-list').append(clone);
 }
 
 
