@@ -1,3 +1,9 @@
+html {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
 body {
   font-family: Siro;
 }
@@ -43,10 +49,19 @@ h3 {
   color: #108043;
 }
 
+h3.font-weight-bold {
+    position: fixed;
+    padding-top: 10px;
+}
+
 #favorites-container {
   background-color: #E3F1DF;
   position: fixed;
   bottom: 0;
+}
+
+div#favorite-lists {
+    padding-top: 3em;
 }
 
 .clicked {
