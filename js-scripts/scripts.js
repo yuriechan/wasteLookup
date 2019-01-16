@@ -30,6 +30,7 @@ fetch(Url)
 
   $('#getPosts').click(()=> {
     resetFocus();
+    hideAllPost();
     renderResults(search(getUserQuery()))
 
 
@@ -38,6 +39,7 @@ fetch(Url)
   $('#getPosts').keydown((event)=>{
     if (event.keyCode === 13){
       resetFocus();
+      hideAllPost();
       renderResults(search(getUserQuery()))
 
 
@@ -45,9 +47,18 @@ fetch(Url)
   })
 
 
-  $('#userInput').on('input', () => {
-    hideAllPost();
-  })
+
+  // $('#userInput').on('input', () => {
+  //   hideAllPost();
+  // })
+
+  // $('#userInput').on('input', () => {
+  //   hideAllPost();
+  // })
+
+  // $(document).on('input','#userInput',function () {
+  //   hideAllPost();
+  // })
 
   $(document).on('click', 'i', function () {
     changeToGreenStar($(this));
@@ -134,12 +145,41 @@ const resetFocus = () => {
 
 const hideAllPost = () => {
 
-  for (let index in dataSet) {
-    if ($("div[id=" + index + "]:not([style])")){
-      $("div[id=" + index + "]").css("display","none");
-      console.log("display none")
+  $('#output').children('div').each(function (index, obj) {
+    // if ($(this).attr())
+    //console.log(index)
+    // console.log($(this)["0"].attributes["0"]);
+    // console.log($(this).attr("style"));
+    // console.log($(this).is('[style]'));
+    if (!$(this).is('[style]')) {
+      console.log('does not have style attribute')
+      $(this).css("display","none");
     }
-  }
+    // console.log($(this).text());
+
+  })
+
+  // for (let index in dataSet) {
+  //   if ($("div[id=" + index + "]:not([style])")){
+  //     // $("div[id=" + index + "]").css("display","none");
+  //     console.log("does not have style attribute")
+  //   } else {
+  //     console.log("does have style attribute")
+  //   }
+  // }
+
+  // if ($("div").not(['style'])){
+  //   console.log("does not have style attribute")
+  // }
+
+  // for (let index in dataSet) {
+  //   if ($("div[class*=keyword]").not([style])){
+  //     // $("div[id=" + index + "]").css("display","none");
+  //     console.log("display none")
+  //   } else {
+  //     console.log('hidden')
+  //   }
+  // }
 }
 
 const changeToGreenStar = (obj) => {
@@ -150,8 +190,6 @@ const changeToGreenStar = (obj) => {
          clone.find("i").attr('id','favorite-list')
          $('#favorite-lists').append(clone);
        }
-
-
 }
 
 const changeToGrayStar = (obj) => {
