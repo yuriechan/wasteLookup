@@ -55,11 +55,40 @@ fetch(Url)
   //   changeToGreenStar();
   // })
 
-  $("i").click(function () {
+  // $("i").click(function () {
+  //   alert('hi')
+  //   changeToGreenStar($(this));
+  //   changeToGrayStar($(this));
+  // })
+
+  $(document).on('click', 'i', function () {
     // alert('hi')
     changeToGreenStar($(this));
+    // changeToGrayStar($(this));
+  })
+
+  $(document).on('click', "i[class*=clicked]", function () {
+    // alert('hi')
+    // changeToGreenStar($(this));
     changeToGrayStar($(this));
   })
+
+
+
+  // $("i").on('click', function () {
+  //   alert('hi')
+  //   changeToGreenStar($(this));
+  // })
+  //
+
+  // $("document").on('click', 'i', function () {
+  //   alert('heyy')
+  //   changeToGrayStar($(this));
+  // })
+
+  // $("i[class*=clicked]").click(function () {
+  //
+  // })
 
 
 })
@@ -150,26 +179,21 @@ const hideAllPost = () => {
 const changeToGreenStar = (obj) => {
   let clone;
     if (!obj.hasClass("clicked")){
-        // console.log('not clicked class');
          obj.addClass("clicked");
-         // clone = obj.parent().parent().clone();
-         clone = obj.parents().eq(2).clone();
-         $('#favorites-list').append(clone);
+         clone = obj.attr('id','favorite-list').parents().eq(2).clone();
+         $('#favorite-lists').append(clone);
        }
+
+
 }
 
 const changeToGrayStar = (obj) => {
   let id;
+  let parentsElement = obj.parents().eq(2);
 
-    if(obj.hasClass("clicked")){
-      id = obj.parents().eq(2).attr("id");
-      console.log(id);
-      $("div[id=" + id + "]").
+    if (obj.is("#favorite-list")){
+      id = parentsElement.attr("id");
+      $("div[id=" + id + "]").find("i").removeClass("clicked");
+      parentsElement.remove();
     }
 }
-
-
-// questions:
-// why array is automatically empty after first itiration
-// issue:
-//get rid of comma inside array
