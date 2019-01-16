@@ -49,47 +49,13 @@ fetch(Url)
     hideAllPost();
   })
 
-
-  // $("i[class*='fa-star']").click(()=> {
-  //   // alert('hi')
-  //   changeToGreenStar();
-  // })
-
-  // $("i").click(function () {
-  //   alert('hi')
-  //   changeToGreenStar($(this));
-  //   changeToGrayStar($(this));
-  // })
-
   $(document).on('click', 'i', function () {
-    // alert('hi')
     changeToGreenStar($(this));
-    // changeToGrayStar($(this));
   })
 
   $(document).on('click', "i[class*=clicked]", function () {
-    // alert('hi')
-    // changeToGreenStar($(this));
     changeToGrayStar($(this));
   })
-
-
-
-  // $("i").on('click', function () {
-  //   alert('hi')
-  //   changeToGreenStar($(this));
-  // })
-  //
-
-  // $("document").on('click', 'i', function () {
-  //   alert('heyy')
-  //   changeToGrayStar($(this));
-  // })
-
-  // $("i[class*=clicked]").click(function () {
-  //
-  // })
-
 
 })
 .catch(error => console.log(error))
@@ -180,7 +146,8 @@ const changeToGreenStar = (obj) => {
   let clone;
     if (!obj.hasClass("clicked")){
          obj.addClass("clicked");
-         clone = obj.attr('id','favorite-list').parents().eq(2).clone();
+         clone = obj.parents().eq(2).clone();
+         clone.find("i").attr('id','favorite-list')
          $('#favorite-lists').append(clone);
        }
 

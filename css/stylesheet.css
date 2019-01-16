@@ -18,6 +18,14 @@ h2 {
   width: 3em;
 }
 
+div#output {
+  position: absolute;
+  right: 0;
+  left: 0;
+  overflow: scroll;
+  height: calc(100% - 100px);
+}
+
 .fa-star {
   opacity: 1;
   transition: 0.3s;
@@ -37,6 +45,8 @@ h3 {
 
 #favorites-container {
   background-color: #E3F1DF;
+  position: fixed;
+  bottom: 0;
 }
 
 .clicked {
