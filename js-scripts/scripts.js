@@ -58,6 +58,7 @@ fetch(Url)
   $("i").click(function () {
     // alert('hi')
     changeToGreenStar($(this));
+    changeToGrayStar($(this));
   })
 
 
@@ -151,12 +152,20 @@ const changeToGreenStar = (obj) => {
     if (!obj.hasClass("clicked")){
         // console.log('not clicked class');
          obj.addClass("clicked");
-         clone = obj.parent().parent().clone();
+         // clone = obj.parent().parent().clone();
+         clone = obj.parents().eq(2).clone();
          $('#favorites-list').append(clone);
+       }
 }
 
+const changeToGrayStar = (obj) => {
+  let id;
 
-    console.log('not green')
+    if(obj.hasClass("clicked")){
+      id = obj.parents().eq(2).attr("id");
+      console.log(id);
+      $("div[id=" + id + "]").
+    }
 }
 
 
