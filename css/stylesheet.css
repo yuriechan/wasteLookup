@@ -18,9 +18,7 @@ h2 {
 
 .btn {
   background-color: #108043;
-  background-image: url(../image/search-icon.png);
-  background-repeat: no-repeat;
-  background-size: 2.5em 2.5em;
+  padding: 0;
   width: 3em;
 }
 
@@ -30,6 +28,10 @@ div#output {
   left: 0;
   overflow: scroll;
   height: calc(100% - 100px);
+}
+
+li {
+  margin-bottom: 1em;
 }
 
 .fa-star {
@@ -44,6 +46,7 @@ div#output {
 .fa-star {
   color: #C4CDD5;
 }
+
 
 h3 {
   color: #108043;

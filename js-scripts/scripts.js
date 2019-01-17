@@ -41,8 +41,6 @@ fetch(Url)
       resetFocus();
       hideAllPost();
       renderResults(search(getUserQuery()))
-
-
     }
   })
 
@@ -66,10 +64,9 @@ const postHiddenData = (data) => {
   data.forEach((element) => {
 
     output += `
-      <div style="display:none" class="container keyword" data-keywords="${element.keywords}" id="${index}">
+      <div style="display:none" class="container-fluid keyword m-4" data-keywords="${element.keywords}" id="${index}">
         <div class="row">
-        <div class="col-1"><i class="fas fa-star fa-lg"></i></div>
-        <div class="col title">${element.title}</div>
+        <div class="col title"><i class="fas fa-star fa-lg mr-3"></i>${element.title}</div>
         <div class="col">${element.body}</div>
         </div>
       </div>
@@ -84,8 +81,14 @@ const postHiddenData = (data) => {
 
 const getUserQuery = () => {
   let userInput = $('#userInput').val().toLowerCase().split(" ");
-  let uniqueUserInput = [...new Set(userInput)];
-  return uniqueUserInput;
+
+  if (userInput == ""){
+    return false;
+  } else {
+    let uniqueUserInput = [...new Set(userInput)];
+    return uniqueUserInput;
+  }
+
 }
 
 const search = (query) => {
@@ -134,7 +137,9 @@ const hideAllPost = () => {
   $('#output').children('div').each(function (index, obj) {
     if (!$(this).is('[style]')) {
       console.log('does not have style attribute')
+      console.log($(this));
       $(this).css("display","none");
+      console.log($(this).is('[style]'));
     }
   })
 }
