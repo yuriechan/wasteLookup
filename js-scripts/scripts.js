@@ -167,6 +167,6 @@ const changeToGrayStar = (obj) => {
     }
 }
 
-const setfavoriteListHeight = (items) => {
-
-}
+// const setfavoriteListHeight = (items) => {
+//
+// }
