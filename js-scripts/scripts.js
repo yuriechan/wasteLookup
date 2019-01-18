@@ -44,7 +44,7 @@ fetch(Url)
     }
   })
 
-  $(document).on('click', 'i', function () {
+  $(document).on('click', "i[class*=fa-star]", function () {
     changeToGreenStar($(this));
   })
 
@@ -118,7 +118,7 @@ const search = (query) => {
 
 
 const renderResults = (arr) => {
-  console.log(arr)
+  // console.log(arr)
   for (let index in arr) {
     $("div[id=" + arr[index] + "]").removeAttr("style");
   }
@@ -136,10 +136,10 @@ const hideAllPost = () => {
 
   $('#output').children('div').each(function (index, obj) {
     if (!$(this).is('[style]')) {
-      console.log('does not have style attribute')
-      console.log($(this));
+      // console.log('does not have style attribute')
+      // console.log($(this));
       $(this).css("display","none");
-      console.log($(this).is('[style]'));
+      // console.log($(this).is('[style]'));
     }
   })
 }
@@ -151,6 +151,7 @@ const changeToGreenStar = (obj) => {
          clone = obj.parents().eq(2).clone();
          clone.find("i").attr('id','favorite-list');
          $('#favorite-lists').prepend(clone);
+         console.log($('#favorite-lists > div').length);
          // $('#favorites-container').css("height","calc(100% - 540px)");
        }
 }
@@ -164,4 +165,8 @@ const changeToGrayStar = (obj) => {
       $("div[id=" + id + "]").find("i").removeClass("clicked");
       parentsElement.remove();
     }
+}
+
+const setfavoriteListHeight = (items) => {
+
 }
