@@ -66,8 +66,8 @@ const postHiddenData = (data) => {
     output += `
       <div style="display:none" class="container-fluid keyword m-4" data-keywords="${element.keywords}" id="${index}">
         <div class="row">
-        <div class="col title"><i class="fas fa-star fa-lg mr-3"></i>${element.title}</div>
-        <div class="col">${element.body}</div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg mb-4 title"><i class="fas fa-star fa-lg mr-3"></i>${element.title}</div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg">${element.body}</div>
         </div>
       </div>
     `;
@@ -149,8 +149,9 @@ const changeToGreenStar = (obj) => {
     if (!obj.hasClass("clicked")){
          obj.addClass("clicked");
          clone = obj.parents().eq(2).clone();
-         clone.find("i").attr('id','favorite-list')
-         $('#favorite-lists').append(clone);
+         clone.find("i").attr('id','favorite-list');
+         $('#favorite-lists').prepend(clone);
+         // $('#favorites-container').css("height","calc(100% - 540px)");
        }
 }
 

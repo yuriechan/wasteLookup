@@ -29,6 +29,10 @@ div#output {
   height: calc(100% - 100px);
 }
 
+ul {
+  padding: 0;
+}
+
 li {
   margin-bottom: 1em;
 }
