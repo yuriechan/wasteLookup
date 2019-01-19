@@ -3,57 +3,64 @@ let numberOfPosts = 0;
 let dataSet = '';
 // let userInput = $('#userInput');
 
-
-
-
 fetch(Url)
-.then(res => {
-   return res.json()
-})
-.then(data => {
-
-  numberOfPosts = data.length;
-
-  data = data.map((post) => {
-    let title = document.createElement('textarea');
-    let body = document.createElement('textarea');
-
-    title.innerHTML += post.title;
-    body.innerHTML += post.body;
-    post.keywords = post.keywords.split(",").join(" ");
-
-    return {title: title.value, body: body.value, keywords: post.keywords};
+  .then(res => {
+    return res.json();
   })
+  .then(data => {
 
-  postHiddenData(data)
-  dataSet = data;
+    numberOfPosts = data.length;
 
-  $('#getPosts').click(()=> {
-    resetFocus();
-    hideAllPost();
-    renderResults(search(getUserQuery()))
+    data = data.map((post) => {
+      let title = document.createElement('textarea');
+      let body = document.createElement('textarea');
+
+      title.innerHTML += post.title;
+      body.innerHTML += post.body;
+      post.keywords = post.keywords.split(",").join(" ");
+
+      return {
+        title: title.value,
+        body: body.value,
+        keywords: post.keywords
+      };
+    })
+
+    postHiddenData(data);
+    dataSet = data;
 
 
-  })
 
-  $('#getPosts').keydown((event)=>{
-    if (event.keyCode === 13){
+    $('#getPosts').click(() => {
       resetFocus();
       hideAllPost();
-      renderResults(search(getUserQuery()))
-    }
-  })
+      renderResults(search(getUserQuery()));
 
-  $(document).on('click', "i[class*=fa-star]", function () {
-    changeToGreenStar($(this));
-  })
 
-  $(document).on('click', "i[class*=clicked]", function () {
-    changeToGrayStar($(this));
-  })
+    })
 
-})
-.catch(error => console.log(error))
+    $('#getPosts').keydown((event) => {
+      if (event.keyCode === 13) {
+        resetFocus();
+        hideAllPost();
+        renderResults(search(getUserQuery()));
+      }
+    })
+
+    $(document).on('click', "i[class*=fa-star]", function() {
+      changeToGreenStar($(this));
+    })
+
+    $(document).on('click', "i[class*=clicked]", function() {
+      changeToGrayStar($(this));
+    })
+
+    $(document).on('click', "i[class*=fa-minus]", function () {
+      $('#favorites-container').toggleClass("expand collapsed");
+    })
+
+  })
+  .catch(error => console.log(error));
 
 
 
@@ -82,7 +89,7 @@ const postHiddenData = (data) => {
 const getUserQuery = () => {
   let userInput = $('#userInput').val().toLowerCase().split(" ");
 
-  if (userInput == ""){
+  if (userInput == "") {
     return false;
   } else {
     let uniqueUserInput = [...new Set(userInput)];
@@ -96,13 +103,13 @@ const search = (query) => {
   let title = $("div[class*='title']");
   let keyword = $("div[class*='keyword']");
 
-  for (let arrIndex in query){
+  for (let arrIndex in query) {
 
     let eachQuery = query[arrIndex];
-    let eachQueryInReg = new RegExp(eachQuery,"g");
-    for (let dataIndex in dataSet){
+    let eachQueryInReg = new RegExp(eachQuery, "g");
+    for (let dataIndex in dataSet) {
 
-      if (title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg) !== null){
+      if (title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg) !== null) {
         allResultsArr.push(dataIndex);
       }
 
@@ -112,8 +119,8 @@ const search = (query) => {
     }
   }
 
-      let uniqueResultsArr = [...new Set(allResultsArr)];
-      return uniqueResultsArr;
+  let uniqueResultsArr = [...new Set(allResultsArr)];
+  return uniqueResultsArr;
 }
 
 
@@ -134,11 +141,11 @@ const resetFocus = () => {
 
 const hideAllPost = () => {
 
-  $('#output').children('div').each(function (index, obj) {
+  $('#output').children('div').each(function(index, obj) {
     if (!$(this).is('[style]')) {
       // console.log('does not have style attribute')
       // console.log($(this));
-      $(this).css("display","none");
+      $(this).css("display", "none");
       // console.log($(this).is('[style]'));
     }
   })
@@ -146,25 +153,25 @@ const hideAllPost = () => {
 
 const changeToGreenStar = (obj) => {
   let clone;
-    if (!obj.hasClass("clicked")){
-         obj.addClass("clicked");
-         clone = obj.parents().eq(2).clone();
-         clone.find("i").attr('id','favorite-list');
-         $('#favorite-lists').prepend(clone);
-         console.log($('#favorite-lists > div').length);
-         // $('#favorites-container').css("height","calc(100% - 540px)");
-       }
+  if (!obj.hasClass("clicked")) {
+    obj.addClass("clicked");
+    clone = obj.parents().eq(2).clone();
+    clone.find("i").attr('id', 'favorite-list');
+    $('#favorite-lists').prepend(clone);
+    console.log($('#favorite-lists > div').length);
+    // $('#favorites-container').css("height","calc(100% - 540px)");
+  }
 }
 
 const changeToGrayStar = (obj) => {
   let id;
   let parentsElement = obj.parents().eq(2);
 
-    if (obj.is("#favorite-list")){
-      id = parentsElement.attr("id");
-      $("div[id=" + id + "]").find("i").removeClass("clicked");
-      parentsElement.remove();
-    }
+  if (obj.is("#favorite-list")) {
+    id = parentsElement.attr("id");
+    $("div[id=" + id + "]").find("i").removeClass("clicked");
+    parentsElement.remove();
+  }
 }
 
 // const setfavoriteListHeight = (items) => {

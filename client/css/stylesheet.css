@@ -70,7 +70,7 @@ h3.font-weight-bold {
   right: 0;
   left: 0;
   overflow: scroll;
-  height: calc(100% - 130px);
+  /* height: calc(100% - 730px); */
   /* height: auto; */
 }
 
@@ -81,6 +81,18 @@ div#favorite-lists {
 .fa-minus {
   position: fixed;
   z-index: 1;
+  color: #108043;
+}
+
+.expand {
+  height: calc(100% - 130px);
+}
+
+.collapsed {
+  height: calc(100% - 730px);
+}
+
+.col-12.h4.text-left {
   color: #108043;
 }
 
