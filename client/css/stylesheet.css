@@ -31,6 +31,7 @@ div#output {
 
 ul {
   padding: 0;
+  margin-bottom: 2em;
 }
 
 li {
@@ -57,7 +58,6 @@ h3 {
 
 h3.font-weight-bold {
     position: fixed;
-    padding-top: 10px;
     width: 100%;
     z-index: 1;
     background-color: #F7FEFA;
@@ -70,12 +70,18 @@ h3.font-weight-bold {
   right: 0;
   left: 0;
   overflow: scroll;
-  height: calc(100% - 540px);
+  height: calc(100% - 130px);
   /* height: auto; */
 }
 
 div#favorite-lists {
   padding-top: 3em;
+}
+
+.fa-minus {
+  position: fixed;
+  z-index: 1;
+  color: #108043;
 }
 
 .clicked {
