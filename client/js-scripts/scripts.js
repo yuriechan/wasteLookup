@@ -1,7 +1,6 @@
 const Url = 'https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000';
 let numberOfPosts = 0;
 let dataSet = '';
-// let userInput = $('#userInput');
 
 fetch(Url)
   .then(res => {
@@ -10,6 +9,7 @@ fetch(Url)
   .then(data => {
 
     numberOfPosts = data.length;
+
 
     data = data.map((post) => {
       let title = document.createElement('textarea');
@@ -48,7 +48,8 @@ fetch(Url)
     })
 
     $(document).on('click', "i[class*=fa-star]", function() {
-      changeToGreenStar($(this));
+      // changeToGreenStar($(this));
+      saveFavList(changeToGreenStar($(this)));
     })
 
     $(document).on('click', "i[class*=clicked]", function() {
@@ -56,7 +57,7 @@ fetch(Url)
     })
 
     $(document).on('click', "i[class*=fa-minus]", function () {
-      moveFavLists();
+      moveFavList();
     })
 
   })
@@ -73,7 +74,7 @@ const postHiddenData = (data) => {
     output += `
       <div style="display:none" class="container-fluid keyword m-4" data-keywords="${element.keywords}" id="${index}">
         <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg mb-4 title"><i class="fas fa-star fa-lg mr-3"></i>${element.title}</div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg mb-3 title"><i class="fas fa-star fa-lg mr-3"></i>${element.title}</div>
         <div class="col-12 col-sm-12 col-md-12 col-lg">${element.body}</div>
         </div>
       </div>
@@ -125,15 +126,14 @@ const search = (query) => {
 
 
 const renderResults = (arr) => {
-  // console.log(arr)
   for (let index in arr) {
     $("div[id=" + arr[index] + "]").removeAttr("style");
   }
 }
 
-const clearInputField = () => {
-  $('#userInput').val("");
-}
+// const clearInputField = () => {
+//   $('#userInput').val("");
+// }
 
 const resetFocus = () => {
   $('#userInput').focus();
@@ -143,24 +143,26 @@ const hideAllPost = () => {
 
   $('#output').children('div').each(function(index, obj) {
     if (!$(this).is('[style]')) {
-      // console.log('does not have style attribute')
-      // console.log($(this));
       $(this).css("display", "none");
-      // console.log($(this).is('[style]'));
     }
   })
 }
 
 const changeToGreenStar = (obj) => {
   let clone;
+  let id;
   if (!obj.hasClass("clicked")) {
     obj.addClass("clicked");
     clone = obj.parents().eq(2).clone();
     clone.find("i").attr('id', 'favorite-list');
+
+    id = clone.attr("id");
+    clone.removeAttr("id");
+    clone.attr("data-id", id);
+
     $('#favorite-lists').prepend(clone);
-    console.log($('#favorite-lists > div').length);
-    // $('#favorites-container').css("height","calc(100% - 540px)");
   }
+  return id;
 }
 
 const changeToGrayStar = (obj) => {
@@ -168,12 +170,18 @@ const changeToGrayStar = (obj) => {
   let parentsElement = obj.parents().eq(2);
 
   if (obj.is("#favorite-list")) {
-    id = parentsElement.attr("id");
+    id = parentsElement.attr("data-id");
     $("div[id=" + id + "]").find("i").removeClass("clicked");
     parentsElement.remove();
   }
 }
 
-const moveFavLists = () => {
+const moveFavList = () => {
   $('#favorites-container').toggleClass("expand");
+}
+
+const saveFavList = (id) => {
+  let favIdArr = [];
+  favIdArr.push(id);
+  console.log(favIdArr);
 }
