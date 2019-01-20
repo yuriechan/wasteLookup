@@ -39,7 +39,7 @@ fetch(Url)
 
     })
 
-    $('#getPosts').keydown((event) => {
+    $('#userInput').keydown((event) => {
       if (event.keyCode === 13) {
         resetFocus();
         hideAllPost();
@@ -56,7 +56,7 @@ fetch(Url)
     })
 
     $(document).on('click', "i[class*=fa-minus]", function () {
-      $('#favorites-container').toggleClass("expand collapsed");
+      moveFavLists();
     })
 
   })
@@ -174,6 +174,6 @@ const changeToGrayStar = (obj) => {
   }
 }
 
-// const setfavoriteListHeight = (items) => {
-//
-// }
+const moveFavLists = () => {
+  $('#favorites-container').toggleClass("expand");
+}

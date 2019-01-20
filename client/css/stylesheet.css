@@ -3,7 +3,6 @@ html {
 }
 
 body {
-  font-family: Siro;
   overflow: hidden;
 }
 
@@ -38,12 +37,12 @@ li {
   margin-bottom: 1em;
 }
 
-.fa-star {
+.fa-star, .fa-minus {
   opacity: 1;
   transition: 0.3s;
 }
 
-.fa-star:hover {
+.fa-star:hover, .fa-minus:hover {
   opacity: 0.6;
 }
 
@@ -51,8 +50,7 @@ li {
   color: #C4CDD5;
 }
 
-
-h3 {
+h3, .clicked, .col-12.h4.text-left {
   color: #108043;
 }
 
@@ -69,13 +67,6 @@ h3.font-weight-bold {
   bottom: 0;
   right: 0;
   left: 0;
-  overflow: scroll;
-  /* height: calc(100% - 730px); */
-  /* height: auto; */
-}
-
-div#favorite-lists {
-  padding-top: 3em;
 }
 
 .fa-minus {
@@ -85,17 +76,10 @@ div#favorite-lists {
 }
 
 .expand {
-  height: calc(100% - 130px);
+  height: calc(100% - 130px) !important;
+  overflow: scroll;
 }
 
 .collapsed {
   height: calc(100% - 730px);
-}
-
-.col-12.h4.text-left {
-  color: #108043;
-}
-
-.clicked {
-  color: #108043;
 }
