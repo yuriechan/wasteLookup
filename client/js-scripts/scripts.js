@@ -44,11 +44,11 @@ fetch(Url)
     })
 
     $(document).on('click', "div[data-id]", function() {
-      storeCookie(deleteFavList(changeToGrayStar($(this))));
+      changeToGrayStar($(this));
     })
 
     $(document).on('click', "i[class*=fa-star]", function() {
-      storeCookie(saveFavList(changeToGreenStar($(this))));
+      changeToGreenStar($(this));
     })
 
     $(document).on('click', "i[class*=fa-minus]", function() {
@@ -166,25 +166,4 @@ const changeToGrayStar = (obj) => {
 
 const moveFavList = () => {
   $('#favorites-container').toggleClass("expand");
-}
-
-const saveFavList = (id) => {
-  if (id !== undefined) {
-    favIdArr.push(id);
-  }
-  return favIdArr;
-}
-
-const deleteFavList = (id) => {
-  let idToRemove = id;
-  let index = favIdArr.indexOf(idToRemove);
-  if (index !== (-1)) {
-    favIdArr.splice(index, 1);
-  }
-  return favIdArr;
-}
-
-const storeCookie = (arr) => {
-  let jsonStr = JSON.stringify(arr);
-  Cookies.set('fav', jsonStr);
 }
