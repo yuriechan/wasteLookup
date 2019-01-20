@@ -29,6 +29,8 @@ fetch(Url)
 
     postHiddenData(data);
     dataSet = data;
+    Cookies.set('name', 'value');
+    document.cookie = "visits=3; path=/;";
 
 
 
@@ -208,7 +210,7 @@ const moveFavList = () => {
 const saveFavList = (id) => {
   if (id !== undefined){
       favIdArr.push(id);
-      Cookies.set('pastfav', favIdArr);
+
       console.log(favIdArr);
     }
   return favIdArr;
