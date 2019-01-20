@@ -26,6 +26,7 @@ div#output {
   left: 0;
   overflow: scroll;
   height: calc(100% - 100px);
+  padding-bottom: 170px;
 }
 
 ul {

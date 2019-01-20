@@ -1,6 +1,7 @@
 const Url = 'https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000';
 let numberOfPosts = 0;
 let dataSet = '';
+let favIdArr = [];
 
 fetch(Url)
   .then(res => {
@@ -47,14 +48,25 @@ fetch(Url)
       }
     })
 
+    // $(document).on('click', "div[data-id]", function () {
+    //   console.log('dataid')
+    // })
+
+    $(document).on('click', "div[data-id]", function() {
+      // changeToGrayStar($(this));
+      deleteFavList(changeToGrayStar($(this)));
+    })
+
+
     $(document).on('click', "i[class*=fa-star]", function() {
       // changeToGreenStar($(this));
       saveFavList(changeToGreenStar($(this)));
     })
 
-    $(document).on('click', "i[class*=clicked]", function() {
-      changeToGrayStar($(this));
-    })
+    // $(document).on('click', "i[class*=clicked]", function() {
+    //   // changeToGrayStar($(this));
+    //   deleteFavList(changeToGrayStar($(this)));
+    // })
 
     $(document).on('click', "i[class*=fa-minus]", function () {
       moveFavList();
@@ -165,23 +177,49 @@ const changeToGreenStar = (obj) => {
   return id;
 }
 
+
 const changeToGrayStar = (obj) => {
   let id;
-  let parentsElement = obj.parents().eq(2);
-
-  if (obj.is("#favorite-list")) {
-    id = parentsElement.attr("data-id");
+  if (obj.find("#favorite-list")) {
+    id = obj.attr("data-id");
     $("div[id=" + id + "]").find("i").removeClass("clicked");
-    parentsElement.remove();
+    obj.remove();
   }
+  return id;
 }
+
+
+// const changeToGrayStar = (obj) => {
+//   let id;
+//   let parentsElement = obj.parents().eq(2);
+//
+//   if (obj.is("#favorite-list")) {
+//     id = parentsElement.attr("data-id");
+//     $("div[id=" + id + "]").find("i").removeClass("clicked");
+//     parentsElement.remove();
+//   }
+//   return id;
+// }
 
 const moveFavList = () => {
   $('#favorites-container').toggleClass("expand");
 }
 
 const saveFavList = (id) => {
-  let favIdArr = [];
-  favIdArr.push(id);
+  if (id !== undefined){
+      favIdArr.push(id);
+      Cookies.set('pastfav', favIdArr);
+      console.log(favIdArr);
+    }
+  return favIdArr;
+}
+
+const deleteFavList = (id) => {
+  let idToRemove = id;
+  let index = favIdArr.indexOf(idToRemove);
+  if (index !== (-1)) {
+    favIdArr.splice(index, 1);
+  }
   console.log(favIdArr);
+  return favIdArr;
 }
