@@ -230,3 +230,15 @@ const storeCookie = (arr) => {
   let jsonStr = JSON.stringify(arr);
   Cookies.set('fav', jsonStr);
 }
+
+const getFavHistory = () => {
+  let pastFav;
+  if (Cookies.get('fav').length !== 2 || Cookies.get('fav') === undefined){
+      return false;
+  } else {
+      pastFav = Cookies.get('fav');
+      JSON.parse(pastFav);
+  }
+  console.log(pastFav);
+  return pastFav;
+}
