@@ -11,7 +11,6 @@ fetch(Url)
 
     numberOfPosts = data.length;
 
-
     data = data.map((post) => {
       let title = document.createElement('textarea');
       let body = document.createElement('textarea');
@@ -29,17 +28,11 @@ fetch(Url)
 
     postHiddenData(data);
     dataSet = data;
-    Cookies.set('name', 'value');
-    document.cookie = "visits=3; path=/;";
-
-
 
     $('#getPosts').click(() => {
       resetFocus();
       hideAllPost();
       renderResults(search(getUserQuery()));
-
-
     })
 
     $('#userInput').keydown((event) => {
@@ -50,27 +43,15 @@ fetch(Url)
       }
     })
 
-    // $(document).on('click', "div[data-id]", function () {
-    //   console.log('dataid')
-    // })
-
     $(document).on('click', "div[data-id]", function() {
-      // changeToGrayStar($(this));
       storeCookie(deleteFavList(changeToGrayStar($(this))));
     })
 
-
     $(document).on('click', "i[class*=fa-star]", function() {
-      // changeToGreenStar($(this));
       storeCookie(saveFavList(changeToGreenStar($(this))));
     })
 
-    // $(document).on('click', "i[class*=clicked]", function() {
-    //   // changeToGrayStar($(this));
-    //   deleteFavList(changeToGrayStar($(this)));
-    // })
-
-    $(document).on('click', "i[class*=fa-minus]", function () {
+    $(document).on('click', "i[class*=fa-minus]", function() {
       moveFavList();
     })
 
@@ -110,7 +91,6 @@ const getUserQuery = () => {
     let uniqueUserInput = [...new Set(userInput)];
     return uniqueUserInput;
   }
-
 }
 
 const search = (query) => {
@@ -145,16 +125,11 @@ const renderResults = (arr) => {
   }
 }
 
-// const clearInputField = () => {
-//   $('#userInput').val("");
-// }
-
 const resetFocus = () => {
   $('#userInput').focus();
 }
 
 const hideAllPost = () => {
-
   $('#output').children('div').each(function(index, obj) {
     if (!$(this).is('[style]')) {
       $(this).css("display", "none");
@@ -179,7 +154,6 @@ const changeToGreenStar = (obj) => {
   return id;
 }
 
-
 const changeToGrayStar = (obj) => {
   let id;
   if (obj.find("#favorite-list")) {
@@ -190,29 +164,14 @@ const changeToGrayStar = (obj) => {
   return id;
 }
 
-
-// const changeToGrayStar = (obj) => {
-//   let id;
-//   let parentsElement = obj.parents().eq(2);
-//
-//   if (obj.is("#favorite-list")) {
-//     id = parentsElement.attr("data-id");
-//     $("div[id=" + id + "]").find("i").removeClass("clicked");
-//     parentsElement.remove();
-//   }
-//   return id;
-// }
-
 const moveFavList = () => {
   $('#favorites-container').toggleClass("expand");
 }
 
 const saveFavList = (id) => {
-  if (id !== undefined){
-      favIdArr.push(id);
-
-      console.log(favIdArr);
-    }
+  if (id !== undefined) {
+    favIdArr.push(id);
+  }
   return favIdArr;
 }
 
@@ -222,23 +181,10 @@ const deleteFavList = (id) => {
   if (index !== (-1)) {
     favIdArr.splice(index, 1);
   }
-  console.log(favIdArr);
   return favIdArr;
 }
 
 const storeCookie = (arr) => {
   let jsonStr = JSON.stringify(arr);
   Cookies.set('fav', jsonStr);
-}
-
-const getFavHistory = () => {
-  let pastFav;
-  if (Cookies.get('fav').length !== 2 || Cookies.get('fav') === undefined){
-      return false;
-  } else {
-      pastFav = Cookies.get('fav');
-      JSON.parse(pastFav);
-  }
-  console.log(pastFav);
-  return pastFav;
 }

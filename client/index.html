@@ -1,59 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- jQuery 3.3.1 -->
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <!-- <script src="js-scripts/js.cookie.js"></script> -->
-    <!-- popper.js 1.14.6 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <!-- bootstrap 4.2.1 -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <!-- font awesome 5.6.3 -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <!-- main css file in css folder -->
-    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-    <!-- main javascript file in js folder -->
-    <script src="js-scripts/scripts.js" charset="utf-8"></script>
-    <title>Toronto Waste Lookup</title>
-  </head>
-  <body>
-    <header>
-      <div class="container text-center py-5" style="height: 130px">
-        <h2 class="font-weight-bold">Toronto Waste Lookup</h2>
-      </div>
-    </header>
-    <div class="container-fluid m-3">
-      <div class="row no-gutter">
-        <input id="userInput" class="col-9 col-sm-10 col-md-10 col-lg-11 form-control form-control-lg mr-3" type="text" placeholder="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- jQuery 3.3.1 -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- jQuery Cookie 2.2.0 -->
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+  <!-- popper.js 1.14.6 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <!-- bootstrap 4.2.1 -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- font awesome 5.6.3 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <!-- main css file in css folder -->
+  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+  <!-- main javascript file in js-scripts folder -->
+  <script src="js-scripts/scripts.js" charset="utf-8"></script>
+  <title>Toronto Waste Lookup</title>
+</head>
+
+<body>
+
+  <header>
+    <div class="container text-center py-5">
+      <h2 class="font-weight-bold align-middle">Toronto Waste Lookup</h2>
+    </div>
+  </header>
+
+  <div class="container-fluid m-3">
+    <div class="row no-gutter">
+      <input id="userInput" class="col-9 col-sm-10 col-md-10 col-lg-11 form-control form-control-lg mr-3" type="text" placeholder="">
         <button id="getPosts" type="button" class="btn btn-success">
           <i class="fas fa-search fa-2x fa-rotate-90"></i>
         </button>
+    </div>
+  </div>
+
+  <div class="container-fluid" id="output"></div>
+
+  <div class="container-fluid collapsed" id="favorites-container">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 text-center"><i class="fas fa-minus fa-2x"></i></div>
+        <div class="col-12 h4 text-left font-weight-bold mt-3 favourites-title">Favourites</div>
       </div>
     </div>
-    <div class="container-fluid" id="output">
-    </div>
+    <div id="favorite-lists"></div>
+  </div>
 
-    <div class="container-fluid collapsed" id="favorites-container">
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-12 text-center">
-              <i class="fas fa-minus fa-2x"></i>
-          </div>
-          <div class="col-12 h4 text-left font-weight-bold mt-3">
-          Favourites
-          </div>
-        </div>
+</body>
 
-      </div>
-
-      <div id="favorite-lists">
-      </div>
-    </div>
-  </body>
 </html>
