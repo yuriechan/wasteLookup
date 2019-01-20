@@ -228,5 +228,5 @@ const deleteFavList = (id) => {
 
 const storeCookie = (arr) => {
   let jsonStr = JSON.stringify(arr);
-  createCookie('fav', jsonStr);
+  Cookies.set('fav', jsonStr);
 }
