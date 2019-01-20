@@ -56,13 +56,13 @@ fetch(Url)
 
     $(document).on('click', "div[data-id]", function() {
       // changeToGrayStar($(this));
-      deleteFavList(changeToGrayStar($(this)));
+      storeCookie(deleteFavList(changeToGrayStar($(this))));
     })
 
 
     $(document).on('click', "i[class*=fa-star]", function() {
       // changeToGreenStar($(this));
-      saveFavList(changeToGreenStar($(this)));
+      storeCookie(saveFavList(changeToGreenStar($(this))));
     })
 
     // $(document).on('click', "i[class*=clicked]", function() {
@@ -224,4 +224,9 @@ const deleteFavList = (id) => {
   }
   console.log(favIdArr);
   return favIdArr;
+}
+
+const storeCookie = (arr) => {
+  let jsonStr = JSON.stringify(arr);
+  createCookie('fav', jsonStr);
 }
