@@ -35,6 +35,12 @@ fetch(Url)
       renderResults(search(getUserQuery()));
     })
 
+    // $(document).on('click touchstart', "#getPosts", function () {
+    //   resetFocus();
+    //   hideAllPost();
+    //   renderResults(search(getUserQuery()));
+    // })
+
     $('#userInput').keydown((event) => {
       if (event.keyCode === 13) {
         resetFocus();
@@ -46,6 +52,7 @@ fetch(Url)
     $(document).on('click', "div[data-id]", function() {
       storeCookie(deleteFavList(changeToGrayStar($(this))));
     })
+
 
     $(document).on('click', "i[class*=fa-star]", function() {
       storeCookie(saveFavList(changeToGreenStar($(this))));
