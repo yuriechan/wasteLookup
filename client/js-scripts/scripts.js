@@ -126,16 +126,19 @@ const search = (query) => {
       // 1-0) if query is found in title && not in keyword push the index num to array 
       // 1-1) if query is not found in title && found in keyword push the index num to array
       // 2) if query is found in both title && keyword, push the index num of title in title array
-      console.log(title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg))
-      console.log(title.eq(dataIndex).text().toLowerCase(), dataIndex)
+      // console.log(title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg))
+      // console.log(title.eq(dataIndex).text().toLowerCase(), dataIndex)
       if (title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg) !== null) {
-        allResultsArr.push(dataIndex);
-        console.log(dataIndex);
-        console.log(allResultsArr)
+        // allResultsArr.push(dataIndex);
+      
       }
       // [BUG] search query 'blue' should not match 'blueprint'
+      console.log(keyword.eq(dataIndex).data("keywords").match(eachQueryInReg))
+      console.log(keyword.eq(dataIndex).data("keywords"), dataIndex)
       if (keyword.eq(dataIndex).data("keywords").match(eachQueryInReg) !== null) {
         allResultsArr.push(dataIndex);
+          console.log(dataIndex);
+          console.log(allResultsArr)
       }
     }
   }
