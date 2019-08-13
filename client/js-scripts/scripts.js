@@ -115,7 +115,6 @@ const search = (query) => {
   let allResultsArr = [];
   let title = $("div[class*='title']");
   let keyword = $("div[class*='keyword']");
-
   for (let arrIndex in query) {
     // retrieve value from an array by index
     let eachQuery = query[arrIndex];
@@ -123,8 +122,16 @@ const search = (query) => {
     for (let dataIndex in dataSet) {
       // if query matches the title of data, push to array 
       // [BUG]redundant number is being pushed 
+      // prep) declare two array for title and keyword 
+      // 1-0) if query is found in title && not in keyword push the index num to array 
+      // 1-1) if query is not found in title && found in keyword push the index num to array
+      // 2) if query is found in both title && keyword, push the index num of title in title array
+      console.log(title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg))
+      console.log(title.eq(dataIndex).text().toLowerCase(), dataIndex)
       if (title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg) !== null) {
         allResultsArr.push(dataIndex);
+        console.log(dataIndex);
+        console.log(allResultsArr)
       }
       // [BUG] search query 'blue' should not match 'blueprint'
       if (keyword.eq(dataIndex).data("keywords").match(eachQueryInReg) !== null) {
