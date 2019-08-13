@@ -3,22 +3,25 @@ let numberOfPosts = 0;
 let dataSet = '';
 let favIdArr = [];
 
+// hit API url 
 fetch(Url)
+  // convert the response in JSON 
   .then(res => {
     return res.json();
   })
   .then(data => {
-
+    // calculate the total number of post
     numberOfPosts = data.length;
 
     data = data.map((post) => {
+      // create container for each data
       let title = document.createElement('textarea');
       let body = document.createElement('textarea');
-
+      // assign data into the empty container && format data 
       title.innerHTML += post.title;
       body.innerHTML += post.body;
       post.keywords = post.keywords.split(",").join(" ");
-
+      // create object with useful property
       return {
         title: title.value,
         body: body.value,
@@ -26,11 +29,16 @@ fetch(Url)
       };
     })
 
+    // render all the data into HTML 
     postHiddenData(data);
+    // assign data into an empty string?
     dataSet = data;
 
+    // when search btn is clicked
     $('#getPosts').click(() => {
+      // reset the focus to search bar
       resetFocus();
+      // render all data in HTML
       hideAllPost();
       renderResults(search(getUserQuery()));
     })
@@ -66,7 +74,7 @@ fetch(Url)
   .catch(error => console.log(error));
 
 
-
+// assign each data into a HTML element 
 const postHiddenData = (data) => {
   let index = 0;
   let output = '';
@@ -84,17 +92,20 @@ const postHiddenData = (data) => {
 
     index++;
   });
-
+// render to HTML file
   $('#output').html(output);
 }
 
 
 const getUserQuery = () => {
+  // retrieve user input in search bar 
   let userInput = $('#userInput').val().toLowerCase().split(" ");
 
+  // if search bar is empty do nothing.
   if (userInput == "") {
     return false;
   } else {
+    // put seach query into an array
     let uniqueUserInput = [...new Set(userInput)];
     return uniqueUserInput;
   }
@@ -106,15 +117,16 @@ const search = (query) => {
   let keyword = $("div[class*='keyword']");
 
   for (let arrIndex in query) {
-
+    // retrieve value from an array by index
     let eachQuery = query[arrIndex];
     let eachQueryInReg = new RegExp(eachQuery, "g");
     for (let dataIndex in dataSet) {
-
+      // if query matches the title of data, push to array 
+      // [BUG]redundant number is being pushed 
       if (title.eq(dataIndex).text().toLowerCase().match(eachQueryInReg) !== null) {
         allResultsArr.push(dataIndex);
       }
-
+      // [BUG] search query 'blue' should not match 'blueprint'
       if (keyword.eq(dataIndex).data("keywords").match(eachQueryInReg) !== null) {
         allResultsArr.push(dataIndex);
       }
@@ -127,6 +139,7 @@ const search = (query) => {
 
 
 const renderResults = (arr) => {
+  // render each data in the array and remove display:none attribute 
   for (let index in arr) {
     $("div[id=" + arr[index] + "]").removeAttr("style");
   }
