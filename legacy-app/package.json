@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \\\"Error: no test specified\\\" && exit 1",
-    "start": "node server"
+    "start": "node server",
+    "open": "open http://localhost:4000/"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "homepage": "https://github.com/yuriechan/shopify-summer-intern#readme",
   "dependencies": {
     "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1"
   }
 }
