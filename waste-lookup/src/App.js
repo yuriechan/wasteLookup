@@ -3,6 +3,7 @@ import './App.css';
 
 import Header from './components/HeaderComponent/Header';
 import SearchBar from './components/SearchBarComponent/SearchBar';
+import SearchResults from './components/SearchResultComponent/SearchResult';
 
 class App extends React.Component {
 
@@ -15,7 +16,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header title="Toronto Waste Lookup"/>
+        <div className="SearchSection__container">
         <SearchBar />
+        <SearchResults />
+        </div>
       </div>
     );
   }
