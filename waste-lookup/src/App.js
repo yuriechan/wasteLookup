@@ -12,6 +12,24 @@ class App extends React.Component {
     fetch(Url).then(res => res.json()).then(data => console.log(data));
   }
 
+  search(data, query) {
+    let lowerCaseQuery = query.toLowerCase().replace(/\s/g, '');
+    let matchedArr = new Array();
+
+    for (let i = 0, n = data.length; i < n; i++) {
+      let keywordArr = data[i].keywords.replace(/\s/g, '').split(',');
+      let matchedOnce = false;
+      for (let j = 0, m = keywordArr.length; j < m; j++) {
+        if (lowerCaseQuery === keywordArr[j]) {
+          matchedArr.push(i);
+          matchedOnce = true;
+        }
+        if (matchedOnce) {break;}
+      }
+    }
+    return matchedArr;
+  }
+
   render () {
     return (
       <div className="App">
