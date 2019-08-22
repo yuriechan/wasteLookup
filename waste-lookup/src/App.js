@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 
 import Header from './components/HeaderComponent/Header';
+import SearchBar from './components/SearchBarComponent/SearchBar';
 
 class App extends React.Component {
 
@@ -14,6 +15,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header title="Toronto Waste Lookup"/>
+        <SearchBar />
       </div>
     );
   }
