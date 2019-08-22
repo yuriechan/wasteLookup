@@ -7,7 +7,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 const SearchBar = (props) => {
     return (
         <div className="SearchBar__container">
-        <InputGroup>
+        <InputGroup className="SearchBar__wrapper">
             <InputGroupAddon addonType="prepend">
                 <FontAwesomeIcon icon={faSearch}/>
             </InputGroupAddon>
