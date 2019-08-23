@@ -63,6 +63,12 @@ class App extends React.Component {
     this.setState({ btnClicked: true });
   };
 
+  decodeHtmlEntity = html => {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  };
+
   render() {
     let results = null;
     if (this.state.btnClicked) {
@@ -71,7 +77,7 @@ class App extends React.Component {
       ) : (
         <div>
           {this.state.matchedItem.map(item => {
-            return <SearchResults title={this.state.json[item].title} children={this.state.json[item].body} />;
+            return <SearchResults title={this.state.json[item].title} children={this.decodeHtmlEntity(this.state.json[item].body)} />;
           })}
         </div>
       );
