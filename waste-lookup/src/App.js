@@ -87,6 +87,10 @@ class App extends React.Component {
             }}
             changed={this.handleUserInputChange}
             value={this.state.userInput}
+            enterkey={() => {
+              this.handleSearchClick();
+              this.search(this.state.json, this.state.userInput);
+            }}
           />
           {results}
         </div>
