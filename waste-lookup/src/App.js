@@ -25,6 +25,8 @@ class App extends React.Component {
   }
 
   search(data, query) {
+    console.log(data);
+    console.log(query);
     let lowerCaseQuery = query.toLowerCase().replace(/\s/g, "");
     let matchedArr = [];
 
@@ -44,7 +46,7 @@ class App extends React.Component {
     return matchedArr;
   }
 
-  userInputChangedHandler = event => {
+  handleUserInputChange = event => {
     this.setState({
       userInput: event.target.value,
     });
@@ -56,7 +58,7 @@ class App extends React.Component {
       <div className="App">
         <Header title="Toronto Waste Lookup" />
         <div className="SearchSection__container">
-          <SearchBar userInput={this.userInputChangedHandler} />
+          <SearchBar changed={this.handleUserInputChange} value={this.state.userInput} />
           <SearchResults />
         </div>
       </div>
