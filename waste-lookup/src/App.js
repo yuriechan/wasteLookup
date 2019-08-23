@@ -45,8 +45,6 @@ class App extends React.Component {
         }
       }
     }
-    console.log(query);
-    console.log(matchedArr);
     this.setState({
       matchedItem: matchedArr,
     });
@@ -59,14 +57,14 @@ class App extends React.Component {
   };
 
   handleSearchClick = () => {
-    const showResult = this.state.btnClicked;
-    this.setState({ btnClicked: !showResult });
+    this.setState({ btnClicked: true });
   };
+
   render() {
     let results = null;
     if (this.state.btnClicked) {
       results = !this.state.matchedItem ? (
-        <div>"no result"</div>
+        <div>no result</div>
       ) : (
         <div>
           {this.state.matchedItem.map(item => {
