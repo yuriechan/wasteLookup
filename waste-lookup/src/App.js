@@ -45,6 +45,9 @@ class App extends React.Component {
         }
       }
     }
+    if (!matchedArr.length) {
+      matchedArr = null;
+    }
     this.setState({
       matchedItem: matchedArr,
     });
