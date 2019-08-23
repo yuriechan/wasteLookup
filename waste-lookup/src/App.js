@@ -11,6 +11,8 @@ class App extends React.Component {
     this.state = {
       json: "",
       userInput: "",
+      btnClicked: false,
+      matchedItem: null,
     };
   }
 
@@ -29,7 +31,6 @@ class App extends React.Component {
     console.log(query);
     let lowerCaseQuery = query.toLowerCase().replace(/\s/g, "");
     let matchedArr = [];
-
     for (let i = 0, n = data.length; i < n; i++) {
       let keywordArr = data[i].keywords.replace(/\s/g, "").split(",");
       let matchedOnce = false;
@@ -43,7 +44,12 @@ class App extends React.Component {
         }
       }
     }
-    return matchedArr;
+    console.log(matchedArr);
+    console.log(typeof this.state.matchedItem);
+    this.setState({
+      matchedItem: matchedArr,
+    });
+    console.log(this.state.matchedItem);
   }
 
   handleUserInputChange = event => {
@@ -53,13 +59,36 @@ class App extends React.Component {
     console.log(this.state.userInput);
   };
 
+  handleSearchClick = () => {
+    const showResult = this.state.btnClicked;
+    this.setState({ btnClicked: !showResult });
+  };
+
   render() {
+    let results = null;
+    if (this.state.btnClicked) {
+      console.log(this.state.matchedItem);
+      results = (
+        <div>
+          {this.state.matchedItem.map(item => {
+            return <SearchResults title={this.state.json[item].title} children={this.state.json[item].body} />;
+          })}
+        </div>
+      );
+    }
     return (
       <div className="App">
         <Header title="Toronto Waste Lookup" />
         <div className="SearchSection__container">
-          <SearchBar changed={this.handleUserInputChange} value={this.state.userInput} />
-          <SearchResults />
+          <SearchBar
+            clicked={() => {
+              this.handleSearchClick();
+              this.search(this.state.json, this.state.userInput);
+            }}
+            changed={this.handleUserInputChange}
+            value={this.state.userInput}
+          />
+          {results}
         </div>
       </div>
     );
