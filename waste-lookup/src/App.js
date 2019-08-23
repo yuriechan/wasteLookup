@@ -10,6 +10,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       json: "",
+      userInput: "",
     };
   }
 
@@ -43,12 +44,19 @@ class App extends React.Component {
     return matchedArr;
   }
 
+  userInputChangedHandler = event => {
+    this.setState({
+      userInput: event.target.value,
+    });
+    console.log(this.state.userInput);
+  };
+
   render() {
     return (
       <div className="App">
         <Header title="Toronto Waste Lookup" />
         <div className="SearchSection__container">
-          <SearchBar />
+          <SearchBar userInput={this.userInputChangedHandler} />
           <SearchResults />
         </div>
       </div>
