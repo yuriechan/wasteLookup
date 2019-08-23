@@ -27,8 +27,9 @@ class App extends React.Component {
   }
 
   search(data, query) {
-    console.log(data);
-    console.log(query);
+    if (!query.length) {
+      return false;
+    }
     let lowerCaseQuery = query.toLowerCase().replace(/\s/g, "");
     let matchedArr = [];
     for (let i = 0, n = data.length; i < n; i++) {
@@ -44,31 +45,29 @@ class App extends React.Component {
         }
       }
     }
+    console.log(query);
     console.log(matchedArr);
-    console.log(typeof this.state.matchedItem);
     this.setState({
       matchedItem: matchedArr,
     });
-    console.log(this.state.matchedItem);
   }
 
   handleUserInputChange = event => {
     this.setState({
       userInput: event.target.value,
     });
-    console.log(this.state.userInput);
   };
 
   handleSearchClick = () => {
     const showResult = this.state.btnClicked;
     this.setState({ btnClicked: !showResult });
   };
-
   render() {
     let results = null;
     if (this.state.btnClicked) {
-      console.log(this.state.matchedItem);
-      results = (
+      results = !this.state.matchedItem ? (
+        <div>"no result"</div>
+      ) : (
         <div>
           {this.state.matchedItem.map(item => {
             return <SearchResults title={this.state.json[item].title} children={this.state.json[item].body} />;
