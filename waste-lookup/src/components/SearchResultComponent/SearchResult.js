@@ -4,8 +4,8 @@ import "./SearchResult.css";
 const SearchResult = props => {
   return (
     <div className="SearchResults__container">
-      <textarea>{props.title}</textarea>
-      <textarea>{props.children}</textarea>
+      <p>{props.title}</p>
+      <p>{props.children}</p>
     </div>
   );
 };

@@ -1,4 +1,7 @@
 .SearchResults__container {
     height: 70%;
     border: 2px solid blue;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

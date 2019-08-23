@@ -14,5 +14,5 @@ html {
   display: flex;
   height: 80vh;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 } 
