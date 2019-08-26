@@ -66,7 +66,11 @@ class App extends React.Component {
   decodeHtmlEntity = html => {
     let txt = document.createElement("textarea");
     txt.innerHTML = html;
-    return txt.value;
+    return { __html: txt.value };
+  };
+
+  createMarkup = obj => {
+    return <div dangerouslySetInnerHTML={obj} />;
   };
 
   render() {
@@ -77,7 +81,12 @@ class App extends React.Component {
       ) : (
         <div>
           {this.state.matchedItem.map(item => {
-            return <SearchResults title={this.state.json[item].title} children={this.decodeHtmlEntity(this.state.json[item].body)} />;
+            return (
+              <SearchResults
+                title={this.state.json[item].title}
+                children={this.createMarkup(this.decodeHtmlEntity(this.state.json[item].body))}
+              />
+            );
           })}
         </div>
       );
