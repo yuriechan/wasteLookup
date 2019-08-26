@@ -1,7 +1,7 @@
 import React from "react";
 import "./SearchResult.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-regular-svg-icons";
 
 const SearchResult = props => {
   return (
