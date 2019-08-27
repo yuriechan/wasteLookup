@@ -73,22 +73,13 @@ class App extends React.Component {
     return { __html: txt.value };
   };
 
-  createMarkup = obj => {
-    return <div dangerouslySetInnerHTML={obj} />;
-  };
-
   render() {
     let results = null;
     if (this.state.searched) {
       results = this.state.matchedData.length ? (
         <div>
           {this.state.matchedData.map(item => {
-            return (
-              <SearchResults
-                title={this.state.data[item].title}
-                children={this.createMarkup(this.decodeHtmlEntity(this.state.data[item].body))}
-              />
-            );
+            return <SearchResults title={this.state.data[item].title} children={this.decodeHtmlEntity(this.state.data[item].body)} />;
           })}
         </div>
       ) : (

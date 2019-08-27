@@ -8,7 +8,7 @@ const SearchResult = props => {
     <div className="SearchResults__container">
       <FontAwesomeIcon icon={faStar} />
       <p>{props.title}</p>
-      <p>{props.children}</p>
+      <p dangerouslySetInnerHTML={props.children}></p>
     </div>
   );
 };
