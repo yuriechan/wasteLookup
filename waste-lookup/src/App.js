@@ -13,6 +13,7 @@ class App extends React.Component {
       userInput: "",
       searched: false,
       matchedData: null,
+      favoritedData: [],
     };
   }
 
@@ -73,13 +74,45 @@ class App extends React.Component {
     return { __html: txt.value };
   };
 
+  handleStarClick = () => {
+    let favoriteArr = this.state.favoritedData;
+    this.state.matchedData.forEach(item => {
+      let starIcon = document.getElementById(item).childNodes[0];
+      let starIconColor = starIcon.getAttribute("color");
+
+      if (starIconColor === "#D8D8D8") {
+        starIcon.setAttribute("color", "#EDD943");
+        favoriteArr.push(item);
+      } else if (starIconColor === "#EDD943") {
+        starIcon.setAttribute("color", "#D8D8D8");
+        favoriteArr.pop(item);
+      }
+    });
+    this.setState({ favoritedData: favoriteArr });
+  };
+
+  handleStarColor = item => {
+    let onceMatched = function(data) {
+      return data === item;
+    };
+    return this.state.favoritedData.some(onceMatched);
+  };
+
   render() {
     let results = null;
     if (this.state.searched) {
       results = this.state.matchedData.length ? (
         <div>
           {this.state.matchedData.map(item => {
-            return <SearchResults title={this.state.data[item].title} children={this.decodeHtmlEntity(this.state.data[item].body)} />;
+            return (
+              <SearchResults
+                color={this.handleStarColor(item) ? "#EDD943" : "#D8D8D8"}
+                onclick={this.handleStarClick}
+                id={item}
+                title={this.state.data[item].title}
+                children={this.decodeHtmlEntity(this.state.data[item].body)}
+              />
+            );
           })}
         </div>
       ) : (
