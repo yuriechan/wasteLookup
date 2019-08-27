@@ -11,8 +11,8 @@ class App extends React.Component {
     this.state = {
       data: "",
       userInput: "",
-      btnClicked: false,
-      matchedItem: null,
+      searched: false,
+      matchedData: null,
     };
   }
 
@@ -45,11 +45,8 @@ class App extends React.Component {
         }
       }
     }
-    if (!matchedArr.length) {
-      matchedArr = null;
-    }
     this.setState({
-      matchedItem: matchedArr,
+      matchedData: matchedArr,
     });
   }
 
@@ -60,13 +57,13 @@ class App extends React.Component {
   };
 
   handleMouseClick = () => {
-    this.setState({ btnClicked: true });
+    this.setState({ searched: true });
   };
 
   handleEnterKey = e => {
-    this.setState({ btnClicked: false });
+    this.setState({ searched: false });
     if (e && e.keyCode === 13) {
-      this.setState({ btnClicked: true });
+      this.setState({ searched: true });
     }
   };
 
@@ -82,12 +79,10 @@ class App extends React.Component {
 
   render() {
     let results = null;
-    if (this.state.btnClicked) {
-      results = !this.state.matchedItem ? (
-        <div>no result</div>
-      ) : (
+    if (this.state.searched) {
+      results = this.state.matchedData.length ? (
         <div>
-          {this.state.matchedItem.map(item => {
+          {this.state.matchedData.map(item => {
             return (
               <SearchResults
                 title={this.state.data[item].title}
@@ -96,6 +91,8 @@ class App extends React.Component {
             );
           })}
         </div>
+      ) : (
+        <div>no result</div>
       );
     }
     return (
