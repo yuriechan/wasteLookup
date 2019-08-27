@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 
+import Header from './components/HeaderComponent/Header';
+
 class App extends React.Component {
 
   componentDidMount() {
@@ -11,6 +13,7 @@ class App extends React.Component {
   render () {
     return (
       <div className="App">
+        <Header title="Toronto Waste Lookup"/>
       </div>
     );
   }
