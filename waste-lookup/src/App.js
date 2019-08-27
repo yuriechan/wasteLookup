@@ -1,9 +1,13 @@
 import React from "react";
 import "./App.css";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "./components/HeaderComponent/Header";
 import SearchBar from "./components/SearchBarComponent/SearchBar";
 import SearchResults from "./components/SearchResultComponent/SearchResult";
+import FavoriteList from "./components/FavoriteListComponent/FavoriteList";
+library.add(faStar);
 
 class App extends React.Component {
   constructor(props) {
@@ -92,10 +96,10 @@ class App extends React.Component {
   };
 
   handleStarColor = item => {
-    let onceMatched = function(data) {
+    let wasFavorited = function(data) {
       return data === item;
     };
-    return this.state.favoritedData.some(onceMatched);
+    return this.state.favoritedData.some(wasFavorited);
   };
 
   render() {
@@ -137,6 +141,7 @@ class App extends React.Component {
           />
           {results}
         </div>
+        <FavoriteList />
       </div>
     );
   }
