@@ -16,7 +16,7 @@ class App extends React.Component {
       data: "",
       userInput: "",
       searched: false,
-      matchedData: null,
+      matchedData: [],
       favoritedData: [],
     };
   }

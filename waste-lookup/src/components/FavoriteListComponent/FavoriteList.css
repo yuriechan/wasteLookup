@@ -6,3 +6,14 @@
     align-items: center;
     justify-content: flex-start;
 }
+
+.modal-content {
+    height: 70vh !important;
+    width: 35vw !important;
+}
+
+.modal {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important; 
+}
