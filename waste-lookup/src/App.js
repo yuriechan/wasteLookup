@@ -59,8 +59,15 @@ class App extends React.Component {
     });
   };
 
-  handleSearchClick = () => {
+  handleMouseClick = () => {
     this.setState({ btnClicked: true });
+  };
+
+  handleEnterKey = e => {
+    this.setState({ btnClicked: false });
+    if (e && e.keyCode === 13) {
+      this.setState({ btnClicked: true });
+    }
   };
 
   decodeHtmlEntity = html => {
@@ -97,13 +104,13 @@ class App extends React.Component {
         <div className="SearchSection__container">
           <SearchBar
             onclick={() => {
-              this.handleSearchClick();
+              this.handleMouseClick();
               this.search(this.state.data, this.state.userInput);
             }}
             onchange={this.handleUserInputChange}
             value={this.state.userInput}
-            onkeydown={() => {
-              this.handleSearchClick();
+            onkeydown={e => {
+              this.handleEnterKey(e);
               this.search(this.state.data, this.state.userInput);
             }}
           />
