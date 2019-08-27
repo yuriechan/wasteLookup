@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      json: "",
+      data: "",
       userInput: "",
       btnClicked: false,
       matchedItem: null,
@@ -21,8 +21,8 @@ class App extends React.Component {
     fetch(Url)
       .then(res => res.json())
       .then(data => {
-        this.setState({ json: data });
-        console.log(this.state.json);
+        this.setState({ data: data });
+        console.log(this.state.data);
       });
   }
 
@@ -83,8 +83,8 @@ class App extends React.Component {
           {this.state.matchedItem.map(item => {
             return (
               <SearchResults
-                title={this.state.json[item].title}
-                children={this.createMarkup(this.decodeHtmlEntity(this.state.json[item].body))}
+                title={this.state.data[item].title}
+                children={this.createMarkup(this.decodeHtmlEntity(this.state.data[item].body))}
               />
             );
           })}
@@ -98,13 +98,13 @@ class App extends React.Component {
           <SearchBar
             onclick={() => {
               this.handleSearchClick();
-              this.search(this.state.json, this.state.userInput);
+              this.search(this.state.data, this.state.userInput);
             }}
             onchange={this.handleUserInputChange}
             value={this.state.userInput}
             onkeydown={() => {
               this.handleSearchClick();
-              this.search(this.state.json, this.state.userInput);
+              this.search(this.state.data, this.state.userInput);
             }}
           />
           {results}
