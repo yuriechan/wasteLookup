@@ -8,9 +8,9 @@ const SearchBar = props => {
   return (
     <div className="SearchBar__container">
       <InputGroup className="SearchBar__wrapper">
-        <Input type="text" placeholder="search" onChange={props.changed} onKeyDown={props.enterkey} value={props.value} />
+        <Input type="text" placeholder="search" onChange={props.onchange} onKeyDown={props.onkeydown} value={props.value} />
         <InputGroupAddon addonType="append">
-          <Button onClick={props.clicked}>
+          <Button onClick={props.onclick}>
             <FontAwesomeIcon icon={faSearch} />
           </Button>
         </InputGroupAddon>

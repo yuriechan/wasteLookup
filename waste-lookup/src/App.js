@@ -96,13 +96,13 @@ class App extends React.Component {
         <Header title="Toronto Waste Lookup" />
         <div className="SearchSection__container">
           <SearchBar
-            clicked={() => {
+            onclick={() => {
               this.handleSearchClick();
               this.search(this.state.json, this.state.userInput);
             }}
-            changed={this.handleUserInputChange}
+            onchange={this.handleUserInputChange}
             value={this.state.userInput}
-            enterkey={() => {
+            onkeydown={() => {
               this.handleSearchClick();
               this.search(this.state.json, this.state.userInput);
             }}
