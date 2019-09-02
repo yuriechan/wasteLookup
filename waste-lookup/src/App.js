@@ -33,7 +33,10 @@ class App extends React.Component {
 
   search(data, query) {
     if (!query.length) {
-      return false;
+      this.setState({
+        matchedData: [],
+      });
+      return;
     }
     let lowerCaseQuery = query.toLowerCase().replace(/\s/g, "");
     let matchedArr = [];
@@ -59,16 +62,19 @@ class App extends React.Component {
     this.setState({
       userInput: event.target.value,
     });
+    if (event.target.value === "") this.search(this.state.data, "");
   };
 
   handleMouseClick = () => {
     this.setState({ searched: true });
+    this.search(this.state.data, this.state.userInput);
   };
 
   handleEnterKey = e => {
     this.setState({ searched: false });
     if (e && e.keyCode === 13) {
       this.setState({ searched: true });
+      this.search(this.state.data, this.state.userInput);
     }
   };
 
@@ -104,8 +110,8 @@ class App extends React.Component {
 
   render() {
     let results = null;
-    if (this.state.searched) {
-      results = this.state.matchedData.length ? (
+    if (this.state.matchedData.length) {
+      results = (
         <div>
           {this.state.matchedData.map(item => {
             return (
@@ -119,9 +125,9 @@ class App extends React.Component {
             );
           })}
         </div>
-      ) : (
-        <div>no result</div>
       );
+    } else if (this.state.searched) {
+      results = <div>no result</div>;
     }
     return (
       <div className="App">
@@ -130,13 +136,11 @@ class App extends React.Component {
           <SearchBar
             onclick={() => {
               this.handleMouseClick();
-              this.search(this.state.data, this.state.userInput);
             }}
             onchange={this.handleUserInputChange}
             value={this.state.userInput}
             onkeydown={e => {
               this.handleEnterKey(e);
-              this.search(this.state.data, this.state.userInput);
             }}
           />
           {results}
