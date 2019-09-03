@@ -1,0 +1,13 @@
+.SearchBar__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    border: 3px solid yellow;
+}
+
+.SearchBar__wrapper {
+    display: flex;
+    flex-direction: row;
+}
