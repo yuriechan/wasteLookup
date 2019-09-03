@@ -1,6 +1,6 @@
 .FavoriteList__container {
     height: 10vh;
-    border: 1px solid pink;
+    /* border: 1px solid pink; */
     display: flex;
     width: calc(100vw - 10vw);
     align-items: center;

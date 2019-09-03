@@ -10,7 +10,7 @@ html {
 
 .SearchSection__container {
   width: 55vw;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   height: 80vh;
   flex-direction: column;
