@@ -9,7 +9,7 @@ class SearchResult extends React.Component {
   }
   render() {
     return (
-      <div onClick={this.props.onclick} id={this.props.id} className="SearchResults__container">
+      <div onClick={this.props.onclick} className="SearchResults__container">
         <div className="SearchResults__header">
           <FontAwesomeIcon color={this.props.color} icon="star" className="SearchResults__header--icon" />
           <p className="SearchResults__header--title">{this.props.title}</p>
