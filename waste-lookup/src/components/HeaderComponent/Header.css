@@ -5,8 +5,10 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .Header__text {
     color: white;
+    margin: unset;
 }
