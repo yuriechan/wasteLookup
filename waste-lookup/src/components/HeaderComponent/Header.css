@@ -10,4 +10,5 @@
 
 .Header__text {
     color: white;
+    margin: unset;
 }

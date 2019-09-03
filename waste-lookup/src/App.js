@@ -87,7 +87,7 @@ class App extends React.Component {
   handleStarClick = () => {
     let favoriteArr = this.state.favoritedData;
     this.state.matchedData.forEach(item => {
-      let starIcon = document.getElementById(item).childNodes[0];
+      let starIcon = document.getElementById(item).getElementsByClassName("SearchResults__header")[0].childNodes[0];
       let starIconColor = starIcon.getAttribute("color");
 
       if (starIconColor === "#D8D8D8") {
