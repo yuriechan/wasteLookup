@@ -1,7 +1,27 @@
 .SearchResults__container {
-    height: 70%;
+    height: fit-content;
     border: 2px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 15px;
+}
+
+.SearchResults__header {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 10px;
+}
+
+.SearchResults__header--icon {
+    margin-right: 1vw;
+}
+
+.SearchResults__header--title {
+    margin: unset;
+}
+
+.SearchResults__body{ 
+    text-align: left;
 }

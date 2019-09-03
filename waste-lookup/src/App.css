@@ -16,3 +16,8 @@ html {
   flex-direction: column;
   justify-content: flex-start;
 } 
+
+ul {
+  margin: unset !important;
+  padding-left: 34px !important;
+}
