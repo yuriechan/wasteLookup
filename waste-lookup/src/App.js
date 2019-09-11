@@ -153,6 +153,7 @@ class App extends React.Component {
                 color={this.handleStarColor(item) ? "#EDD943" : "#D8D8D8"}
                 onclick={this.handleStarClick}
                 id={item}
+                key={item}
                 title={this.state.data[item].title}
                 children={this.decodeHtmlEntity(this.state.data[item].body)}
               />
