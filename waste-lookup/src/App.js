@@ -62,7 +62,6 @@ class App extends React.Component {
     this.setState({
       userInput: event.target.value,
     });
-    if (event.target.value === "") this.search(this.state.data, "");
   };
 
   handleMouseClick = () => {
