@@ -116,6 +116,7 @@ class App extends React.Component {
           {this.state.matchedData.map(item => {
             return (
               <SearchResults
+                id={item}
                 color={this.handleStarColor(item) ? "#EDD943" : "#D8D8D8"}
                 onclick={this.handleStarClick}
                 key={item}
