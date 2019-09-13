@@ -38,24 +38,66 @@ class App extends React.Component {
       });
       return;
     }
-    let lowerCaseQuery = query.toLowerCase().replace(/\s/g, "");
+
+    let lowerCaseQuery = query.toLowerCase();
+    console.log(`lowerCaseQuery: ${lowerCaseQuery}`);
+    let lengthOfQuery = lowerCaseQuery.length;
+    console.log(`lengthOfQuery: ${lengthOfQuery}`);
+    while (lowerCaseQuery.charAt(lengthOfQuery - 1) === " ") {
+      lowerCaseQuery = lowerCaseQuery.slice(0, lengthOfQuery - 1);
+      lengthOfQuery = lowerCaseQuery.length;
+      console.log(`lowerCaseQuery: ${lowerCaseQuery}`);
+      console.log(`lengthOfQuery: ${lengthOfQuery}`);
+    }
     let matchedArr = [];
     for (let i = 0, n = data.length; i < n; i++) {
-      let keywordArr = data[i].keywords.replace(/\s/g, "").split(",");
-      let matchedOnce = false;
-      for (let j = 0, m = keywordArr.length; j < m; j++) {
-        if (lowerCaseQuery === keywordArr[j]) {
-          matchedArr.push(i);
-          matchedOnce = true;
-        }
-        if (matchedOnce) {
-          break;
+      let body = data[i].body;
+      let txt = document.createElement("textarea");
+      txt.innerHTML = body;
+      let decodedBody = txt.value;
+      console.log(`decodedBody: ${decodedBody}`);
+      let bodyText = decodedBody
+        .replace(/\<[^<>]*\>/g, "")
+        .replace(/&nbsp;/g, " ")
+        .toLowerCase();
+      console.log(`bodyText: ${bodyText}`);
+      let matched = null;
+      let scoreAdded = false;
+      let score = 0;
+
+      for (let j = 0, m = bodyText.length; j < m; j++) {
+        if (matched) {
+          score = score + 1;
+          scoreAdded = true;
+          matched = null;
+        } else if (matched === false) {
+          matched = null;
+        } else if (matched === null) {
+          if (query.charAt(0) === bodyText.charAt(j)) {
+            for (let k = 1, o = query.length; k < o; k++) {
+              if (matched === false) {
+                break;
+              }
+              if (query.charAt(k) === bodyText.charAt(j + k)) {
+                matched = true;
+              } else {
+                matched = false;
+              }
+            }
+          }
         }
       }
+      if (scoreAdded) {
+        let obj = {};
+        obj[i] = score;
+        matchedArr.push(obj);
+      }
     }
-    this.setState({
-      matchedData: matchedArr,
-    });
+    console.log(matchedArr);
+
+    // this.setState({
+    //   matchedData: matchedArr,
+    // });
   }
 
   handleUserInputChange = event => {
