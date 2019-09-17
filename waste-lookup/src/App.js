@@ -9,6 +9,16 @@ import SearchResults from "./components/SearchResultComponent/SearchResult";
 import FavoriteList from "./components/FavoriteListComponent/FavoriteList";
 library.add(faStar);
 
+function filterUserInput(query) {
+  let lowerCaseQuery = query.toLowerCase();
+  let lengthOfQuery = lowerCaseQuery.length;
+  while (lowerCaseQuery.charAt(lengthOfQuery - 1) === " ") {
+    lowerCaseQuery = lowerCaseQuery.slice(0, lengthOfQuery - 1);
+    lengthOfQuery = lowerCaseQuery.length;
+  }
+  return [lowerCaseQuery, lengthOfQuery];
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -39,16 +49,10 @@ class App extends React.Component {
       return;
     }
 
-    let lowerCaseQuery = query.toLowerCase();
-    console.log(`lowerCaseQuery: ${lowerCaseQuery}`);
-    let lengthOfQuery = lowerCaseQuery.length;
-    console.log(`lengthOfQuery: ${lengthOfQuery}`);
-    while (lowerCaseQuery.charAt(lengthOfQuery - 1) === " ") {
-      lowerCaseQuery = lowerCaseQuery.slice(0, lengthOfQuery - 1);
-      lengthOfQuery = lowerCaseQuery.length;
-      console.log(`lowerCaseQuery: ${lowerCaseQuery}`);
-      console.log(`lengthOfQuery: ${lengthOfQuery}`);
-    }
+    let userInput = filterUserInput(query);
+    let lowerCaseQuery = userInput[0];
+    let lengthOfQuery = userInput[1];
+
     let matchedArr = [];
     for (let i = 0, n = data.length; i < n; i++) {
       let body = data[i].body;
@@ -73,12 +77,12 @@ class App extends React.Component {
         } else if (matched === false) {
           matched = null;
         } else if (matched === null) {
-          if (query.charAt(0) === bodyText.charAt(j)) {
-            for (let k = 1, o = query.length; k < o; k++) {
+          if (lowerCaseQuery.charAt(0) === bodyText.charAt(j)) {
+            for (let k = 1, o = lengthOfQuery; k < o; k++) {
               if (matched === false) {
                 break;
               }
-              if (query.charAt(k) === bodyText.charAt(j + k)) {
+              if (lowerCaseQuery.charAt(k) === bodyText.charAt(j + k)) {
                 matched = true;
               } else {
                 matched = false;
