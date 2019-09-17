@@ -19,6 +19,53 @@ function filterUserInput(query) {
   return [lowerCaseQuery, lengthOfQuery];
 }
 
+function scoringData(data, property, lowerCaseQuery, lengthOfQuery, matchedArr) {
+  for (let i = 0, n = data.length; i < n; i++) {
+    let body = data[i][property];
+    let txt = document.createElement("textarea");
+    txt.innerHTML = body;
+    let decodedBody = txt.value;
+    console.log(`decodedBody: ${decodedBody}`);
+    let bodyText = decodedBody
+      .replace(/\<[^<>]*\>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .toLowerCase();
+    console.log(`bodyText: ${bodyText}`);
+    let matched = null;
+    let scoreAdded = false;
+    let score = 0;
+    let obj = {};
+
+    for (let j = 0, m = bodyText.length; j < m; j++) {
+      if (matched) {
+        score = score + 1;
+        scoreAdded = true;
+        matched = null;
+      } else if (matched === false) {
+        matched = null;
+      } else if (matched === null) {
+        if (lowerCaseQuery.charAt(0) === bodyText.charAt(j)) {
+          for (let k = 1, o = lengthOfQuery; k < o; k++) {
+            if (matched === false) {
+              break;
+            }
+            if (lowerCaseQuery.charAt(k) === bodyText.charAt(j + k)) {
+              matched = true;
+            } else {
+              matched = false;
+            }
+          }
+        }
+      }
+    }
+    if (scoreAdded) {
+      obj[i] = score;
+      matchedArr.push(obj);
+    }
+  }
+  return matchedArr;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -48,55 +95,20 @@ class App extends React.Component {
       });
       return;
     }
+    // this should be set with SetState
+    let matchedArr = [];
+
+    const context = {
+      body: "body",
+      title: "title",
+      category: "category",
+      keywords: "keywords",
+    };
 
     let userInput = filterUserInput(query);
     let lowerCaseQuery = userInput[0];
     let lengthOfQuery = userInput[1];
-
-    let matchedArr = [];
-    for (let i = 0, n = data.length; i < n; i++) {
-      let body = data[i].body;
-      let txt = document.createElement("textarea");
-      txt.innerHTML = body;
-      let decodedBody = txt.value;
-      console.log(`decodedBody: ${decodedBody}`);
-      let bodyText = decodedBody
-        .replace(/\<[^<>]*\>/g, "")
-        .replace(/&nbsp;/g, " ")
-        .toLowerCase();
-      console.log(`bodyText: ${bodyText}`);
-      let matched = null;
-      let scoreAdded = false;
-      let score = 0;
-      let obj = {};
-
-      for (let j = 0, m = bodyText.length; j < m; j++) {
-        if (matched) {
-          score = score + 1;
-          scoreAdded = true;
-          matched = null;
-        } else if (matched === false) {
-          matched = null;
-        } else if (matched === null) {
-          if (lowerCaseQuery.charAt(0) === bodyText.charAt(j)) {
-            for (let k = 1, o = lengthOfQuery; k < o; k++) {
-              if (matched === false) {
-                break;
-              }
-              if (lowerCaseQuery.charAt(k) === bodyText.charAt(j + k)) {
-                matched = true;
-              } else {
-                matched = false;
-              }
-            }
-          }
-        }
-      }
-      if (scoreAdded) {
-        obj[i] = score;
-        matchedArr.push(obj);
-      }
-    }
+    matchedArr = scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
     console.log(matchedArr);
 
     // this.setState({
