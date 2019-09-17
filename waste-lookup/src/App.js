@@ -20,21 +20,19 @@ function filterUserInput(query) {
 }
 
 function scoringData(data, property, lowerCaseQuery, lengthOfQuery, matchedArr) {
+  let matchingArr = [];
   for (let i = 0, n = data.length; i < n; i++) {
     let body = data[i][property];
     let txt = document.createElement("textarea");
     txt.innerHTML = body;
     let decodedBody = txt.value;
-    console.log(`decodedBody: ${decodedBody}`);
     let bodyText = decodedBody
       .replace(/\<[^<>]*\>/g, "")
       .replace(/&nbsp;/g, " ")
       .toLowerCase();
-    console.log(`bodyText: ${bodyText}`);
     let matched = null;
     let scoreAdded = false;
     let score = 0;
-    let obj = {};
 
     for (let j = 0, m = bodyText.length; j < m; j++) {
       if (matched) {
@@ -59,10 +57,26 @@ function scoringData(data, property, lowerCaseQuery, lengthOfQuery, matchedArr) 
       }
     }
     if (scoreAdded) {
+      let obj = {};
       obj[i] = score;
-      matchedArr.push(obj);
+      matchingArr.push(obj);
+      console.log(obj);
+      console.log(matchingArr);
+      console.log(`This is obj length: ${matchingArr.length}`);
     }
   }
+  for (let l = 0, p = matchingArr.length; l < p; l++) {
+    for (let h = 0, q = matchedArr.length; h < q; h++) {
+      let keyNameOfMatchingArray = Object.keys(matchingArr[l])[0];
+      console.log(`Key: ${keyNameOfMatchingArray}`);
+      if (matchedArr[h][keyNameOfMatchingArray]) {
+        matchedArr[h][keyNameOfMatchingArray] += matchingArr[l][keyNameOfMatchingArray];
+      } else {
+        matchedArr.push(matchingArr[l]);
+      }
+    }
+  }
+  console.log(`This is matchedArr: ${matchedArr}`);
   return matchedArr;
 }
 
@@ -109,6 +123,7 @@ class App extends React.Component {
     let lowerCaseQuery = userInput[0];
     let lengthOfQuery = userInput[1];
     matchedArr = scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
+    // matchedArr = scoringData(data, context.title, lowerCaseQuery, lengthOfQuery, matchedArr);
     console.log(matchedArr);
 
     // this.setState({
