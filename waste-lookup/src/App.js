@@ -79,7 +79,9 @@ function scoringData(data, property, lowerCaseQuery, lengthOfQuery, matchedArr) 
       matchedArr.push(matchingArr[l]);
     }
   }
-  return matchedArr;
+  this.setState({
+    matchedData: matchedArr,
+  });
 }
 
 class App extends React.Component {
@@ -112,7 +114,7 @@ class App extends React.Component {
       return;
     }
     // this should be set with SetState
-    let matchedArr = [];
+    let matchedArr = this.state.matchedData;
 
     const context = {
       body: "body",
@@ -124,13 +126,9 @@ class App extends React.Component {
     let userInput = filterUserInput(query);
     let lowerCaseQuery = userInput[0];
     let lengthOfQuery = userInput[1];
-    // matchedArr = scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
-    matchedArr = scoringData(data, context.title, lowerCaseQuery, lengthOfQuery, matchedArr);
+    scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
+    scoringData(data, context.title, lowerCaseQuery, lengthOfQuery, matchedArr);
     console.log(matchedArr);
-
-    // this.setState({
-    //   matchedData: matchedArr,
-    // });
   }
 
   handleUserInputChange = event => {
