@@ -60,23 +60,25 @@ function scoringData(data, property, lowerCaseQuery, lengthOfQuery, matchedArr) 
       let obj = {};
       obj[i] = score;
       matchingArr.push(obj);
-      console.log(obj);
-      console.log(matchingArr);
-      console.log(`This is obj length: ${matchingArr.length}`);
     }
   }
   for (let l = 0, p = matchingArr.length; l < p; l++) {
-    for (let h = 0, q = matchedArr.length; h < q; h++) {
-      let keyNameOfMatchingArray = Object.keys(matchingArr[l])[0];
-      console.log(`Key: ${keyNameOfMatchingArray}`);
-      if (matchedArr[h][keyNameOfMatchingArray]) {
-        matchedArr[h][keyNameOfMatchingArray] += matchingArr[l][keyNameOfMatchingArray];
-      } else {
+    if (matchedArr.length) {
+      let foundSameKey = false;
+      for (let h = 0, q = matchedArr.length; h < q; h++) {
+        let keyNameOfMatchingArray = Object.keys(matchingArr[l]);
+        if (matchedArr[h][keyNameOfMatchingArray]) {
+          foundSameKey = true;
+          matchedArr[h][keyNameOfMatchingArray].val += matchingArr[l][keyNameOfMatchingArray].val;
+        }
+      }
+      if (!foundSameKey) {
         matchedArr.push(matchingArr[l]);
       }
+    } else {
+      matchedArr.push(matchingArr[l]);
     }
   }
-  console.log(`This is matchedArr: ${matchedArr}`);
   return matchedArr;
 }
 
@@ -122,8 +124,8 @@ class App extends React.Component {
     let userInput = filterUserInput(query);
     let lowerCaseQuery = userInput[0];
     let lengthOfQuery = userInput[1];
-    matchedArr = scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
-    // matchedArr = scoringData(data, context.title, lowerCaseQuery, lengthOfQuery, matchedArr);
+    // matchedArr = scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
+    matchedArr = scoringData(data, context.title, lowerCaseQuery, lengthOfQuery, matchedArr);
     console.log(matchedArr);
 
     // this.setState({
