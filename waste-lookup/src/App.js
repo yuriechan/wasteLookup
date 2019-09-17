@@ -68,6 +68,7 @@ class App extends React.Component {
       let matched = null;
       let scoreAdded = false;
       let score = 0;
+      let obj = {};
 
       for (let j = 0, m = bodyText.length; j < m; j++) {
         if (matched) {
@@ -92,7 +93,6 @@ class App extends React.Component {
         }
       }
       if (scoreAdded) {
-        let obj = {};
         obj[i] = score;
         matchedArr.push(obj);
       }
