@@ -113,9 +113,8 @@ class App extends React.Component {
         matchedArr.push(matchingArr[l]);
       }
     }
-    this.setState({
-      matchedData: matchedArr,
-    });
+    console.log(matchedArr);
+    return matchedArr;
   }
 
   search(data, query) {
@@ -131,11 +130,20 @@ class App extends React.Component {
       category: "category",
       keywords: "keywords",
     };
+    this.setState({
+      matchedData: [],
+    });
+    let matchedArr = [];
 
-    this.scoringData(data, context.body, query);
-    this.scoringData(data, context.title, query);
-    this.scoringData(data, context.category, query);
-    this.scoringData(data, context.keywords, query);
+    let bodyArr = this.scoringData(data, context.body, query);
+    let titleArr = this.scoringData(data, context.title, query);
+    let categoryArr = this.scoringData(data, context.category, query);
+    let keywordsArr = this.scoringData(data, context.keywords, query);
+
+    let totalArr = matchedArr.concat(bodyArr, titleArr, categoryArr, keywordsArr);
+    this.setState({
+      matchedData: totalArr,
+    });
   }
 
   handleUserInputChange = event => {
