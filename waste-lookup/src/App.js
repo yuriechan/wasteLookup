@@ -19,6 +19,17 @@ function filterUserInput(query) {
   return [lowerCaseQuery, lengthOfQuery];
 }
 
+function filterHTMLEntitity(body) {
+  let txt = document.createElement("textarea");
+  txt.innerHTML = body;
+  let decodedBody = txt.value;
+  let bodyText = decodedBody
+    .replace(/\<[^<>]*\>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .toLowerCase();
+  return bodyText;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -52,13 +63,7 @@ class App extends React.Component {
     let matchingArr = [];
     for (let i = 0, n = data.length; i < n; i++) {
       let body = data[i][property];
-      let txt = document.createElement("textarea");
-      txt.innerHTML = body;
-      let decodedBody = txt.value;
-      let bodyText = decodedBody
-        .replace(/\<[^<>]*\>/g, "")
-        .replace(/&nbsp;/g, " ")
-        .toLowerCase();
+      let bodyText = filterHTMLEntitity(body);
       let matched = null;
       let scoreAdded = false;
       let score = 0;
