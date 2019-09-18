@@ -103,7 +103,6 @@ class App extends React.Component {
         matchedArr.push(matchingArr[l]);
       }
     }
-    console.log(this.state.matchedData.map((item, index) => console.log(item[index])));
     this.setState({
       matchedData: matchedArr,
     });
@@ -116,7 +115,7 @@ class App extends React.Component {
       });
       return;
     }
-    // this should be set with SetState
+
     let matchedArr = this.state.matchedData;
 
     const context = {
@@ -131,6 +130,8 @@ class App extends React.Component {
     let lengthOfQuery = userInput[1];
     this.scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
     this.scoringData(data, context.title, lowerCaseQuery, lengthOfQuery, matchedArr);
+    this.scoringData(data, context.category, lowerCaseQuery, lengthOfQuery, matchedArr);
+    this.scoringData(data, context.keywords, lowerCaseQuery, lengthOfQuery, matchedArr);
     console.log(matchedArr);
   }
 
@@ -191,12 +192,12 @@ class App extends React.Component {
           {this.state.matchedData.map(item => {
             return (
               <SearchResults
-                id={item}
-                color={this.handleStarColor(item) ? "#EDD943" : "#D8D8D8"}
+                id={Object.keys(item)}
+                color={this.handleStarColor(Object.keys(item)) ? "#EDD943" : "#D8D8D8"}
                 onclick={this.handleStarClick}
-                key={item}
-                title={this.state.data[item].title}
-                children={this.decodeHtmlEntity(this.state.data[item].body)}
+                key={Object.keys(item)}
+                title={this.state.data[Object.keys(item)].title}
+                children={this.decodeHtmlEntity(this.state.data[Object.keys(item)].body)}
               />
             );
           })}
