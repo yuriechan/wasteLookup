@@ -30,6 +30,27 @@ function filterHTMLEntitity(body) {
   return bodyText;
 }
 
+function addValueOfSameKey(matchedArr, matchingArr) {
+  for (let l = 0, p = matchingArr.length; l < p; l++) {
+    if (matchedArr.length) {
+      let foundSameKey = false;
+      for (let h = 0, q = matchedArr.length; h < q; h++) {
+        let keyNameOfMatchingArray = Object.keys(matchingArr[l]);
+        if (matchedArr[h][keyNameOfMatchingArray]) {
+          foundSameKey = true;
+          matchedArr[h][keyNameOfMatchingArray] += matchingArr[l][keyNameOfMatchingArray];
+        }
+      }
+      if (!foundSameKey) {
+        matchedArr.push(matchingArr[l]);
+      }
+    } else {
+      matchedArr.push(matchingArr[l]);
+    }
+  }
+  return matchedArr;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -96,25 +117,8 @@ class App extends React.Component {
         matchingArr.push(obj);
       }
     }
-    for (let l = 0, p = matchingArr.length; l < p; l++) {
-      if (matchedArr.length) {
-        let foundSameKey = false;
-        for (let h = 0, q = matchedArr.length; h < q; h++) {
-          let keyNameOfMatchingArray = Object.keys(matchingArr[l]);
-          if (matchedArr[h][keyNameOfMatchingArray]) {
-            foundSameKey = true;
-            matchedArr[h][keyNameOfMatchingArray] += matchingArr[l][keyNameOfMatchingArray];
-          }
-        }
-        if (!foundSameKey) {
-          matchedArr.push(matchingArr[l]);
-        }
-      } else {
-        matchedArr.push(matchingArr[l]);
-      }
-    }
-    console.log(matchedArr);
-    return matchedArr;
+    let totalMatchedArr = addValueOfSameKey(matchedArr, matchingArr);
+    return totalMatchedArr;
   }
 
   search(data, query) {
@@ -141,8 +145,9 @@ class App extends React.Component {
     let keywordsArr = this.scoringData(data, context.keywords, query);
 
     let totalArr = matchedArr.concat(bodyArr, titleArr, categoryArr, keywordsArr);
+    let totalMatchedArr = addValueOfSameKey(matchedArr, totalArr);
     this.setState({
-      matchedData: totalArr,
+      matchedData: totalMatchedArr,
     });
   }
 
@@ -199,7 +204,7 @@ class App extends React.Component {
     let results = null;
     if (this.state.matchedData.length) {
       results = (
-        <div>
+        <div className="SearchResults__wrapper">
           {this.state.matchedData.map(item => {
             return (
               <SearchResults

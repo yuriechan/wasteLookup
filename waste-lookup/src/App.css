@@ -21,3 +21,7 @@ ul {
   margin: unset !important;
   padding-left: 34px !important;
 }
+
+.SearchResults__wrapper {
+  overflow: scroll;
+}
