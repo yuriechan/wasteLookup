@@ -43,7 +43,12 @@ class App extends React.Component {
       });
   }
 
-  scoringData(data, property, lowerCaseQuery, lengthOfQuery, matchedArr) {
+  scoringData(data, property, query) {
+    let userInput = filterUserInput(query);
+    let lowerCaseQuery = userInput[0];
+    let lengthOfQuery = userInput[1];
+
+    let matchedArr = [];
     let matchingArr = [];
     for (let i = 0, n = data.length; i < n; i++) {
       let body = data[i][property];
@@ -115,9 +120,6 @@ class App extends React.Component {
       });
       return;
     }
-
-    let matchedArr = this.state.matchedData;
-
     const context = {
       body: "body",
       title: "title",
@@ -125,14 +127,10 @@ class App extends React.Component {
       keywords: "keywords",
     };
 
-    let userInput = filterUserInput(query);
-    let lowerCaseQuery = userInput[0];
-    let lengthOfQuery = userInput[1];
-    this.scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
-    this.scoringData(data, context.title, lowerCaseQuery, lengthOfQuery, matchedArr);
-    this.scoringData(data, context.category, lowerCaseQuery, lengthOfQuery, matchedArr);
-    this.scoringData(data, context.keywords, lowerCaseQuery, lengthOfQuery, matchedArr);
-    console.log(matchedArr);
+    this.scoringData(data, context.body, query);
+    this.scoringData(data, context.title, query);
+    this.scoringData(data, context.category, query);
+    this.scoringData(data, context.keywords, query);
   }
 
   handleUserInputChange = event => {
