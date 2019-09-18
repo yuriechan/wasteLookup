@@ -35,7 +35,7 @@ function addValueOfSameKey(matchedArr, matchingArr) {
     if (matchedArr.length) {
       let foundSameKey = false;
       for (let h = 0, q = matchedArr.length; h < q; h++) {
-        let keyNameOfMatchingArray = Object.keys(matchingArr[l]);
+        let keyNameOfMatchingArray = Object.keys(matchingArr[l])[0];
         if (matchedArr[h][keyNameOfMatchingArray]) {
           foundSameKey = true;
           matchedArr[h][keyNameOfMatchingArray] += matchingArr[l][keyNameOfMatchingArray];
