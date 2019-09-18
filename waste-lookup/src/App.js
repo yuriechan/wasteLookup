@@ -19,71 +19,6 @@ function filterUserInput(query) {
   return [lowerCaseQuery, lengthOfQuery];
 }
 
-function scoringData(data, property, lowerCaseQuery, lengthOfQuery, matchedArr) {
-  let matchingArr = [];
-  for (let i = 0, n = data.length; i < n; i++) {
-    let body = data[i][property];
-    let txt = document.createElement("textarea");
-    txt.innerHTML = body;
-    let decodedBody = txt.value;
-    let bodyText = decodedBody
-      .replace(/\<[^<>]*\>/g, "")
-      .replace(/&nbsp;/g, " ")
-      .toLowerCase();
-    let matched = null;
-    let scoreAdded = false;
-    let score = 0;
-
-    for (let j = 0, m = bodyText.length; j < m; j++) {
-      if (matched) {
-        score = score + 1;
-        scoreAdded = true;
-        matched = null;
-      } else if (matched === false) {
-        matched = null;
-      } else if (matched === null) {
-        if (lowerCaseQuery.charAt(0) === bodyText.charAt(j)) {
-          for (let k = 1, o = lengthOfQuery; k < o; k++) {
-            if (matched === false) {
-              break;
-            }
-            if (lowerCaseQuery.charAt(k) === bodyText.charAt(j + k)) {
-              matched = true;
-            } else {
-              matched = false;
-            }
-          }
-        }
-      }
-    }
-    if (scoreAdded) {
-      let obj = {};
-      obj[i] = score;
-      matchingArr.push(obj);
-    }
-  }
-  for (let l = 0, p = matchingArr.length; l < p; l++) {
-    if (matchedArr.length) {
-      let foundSameKey = false;
-      for (let h = 0, q = matchedArr.length; h < q; h++) {
-        let keyNameOfMatchingArray = Object.keys(matchingArr[l]);
-        if (matchedArr[h][keyNameOfMatchingArray]) {
-          foundSameKey = true;
-          matchedArr[h][keyNameOfMatchingArray].val += matchingArr[l][keyNameOfMatchingArray].val;
-        }
-      }
-      if (!foundSameKey) {
-        matchedArr.push(matchingArr[l]);
-      }
-    } else {
-      matchedArr.push(matchingArr[l]);
-    }
-  }
-  this.setState({
-    matchedData: matchedArr,
-  });
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -94,6 +29,8 @@ class App extends React.Component {
       matchedData: [],
       favoritedData: [],
     };
+    this.search = this.search.bind(this);
+    this.scoringData = this.scoringData.bind(this);
   }
 
   componentDidMount() {
@@ -104,6 +41,72 @@ class App extends React.Component {
         this.setState({ data: data });
         console.log(this.state.data);
       });
+  }
+
+  scoringData(data, property, lowerCaseQuery, lengthOfQuery, matchedArr) {
+    let matchingArr = [];
+    for (let i = 0, n = data.length; i < n; i++) {
+      let body = data[i][property];
+      let txt = document.createElement("textarea");
+      txt.innerHTML = body;
+      let decodedBody = txt.value;
+      let bodyText = decodedBody
+        .replace(/\<[^<>]*\>/g, "")
+        .replace(/&nbsp;/g, " ")
+        .toLowerCase();
+      let matched = null;
+      let scoreAdded = false;
+      let score = 0;
+
+      for (let j = 0, m = bodyText.length; j < m; j++) {
+        if (matched) {
+          score = score + 1;
+          scoreAdded = true;
+          matched = null;
+        } else if (matched === false) {
+          matched = null;
+        } else if (matched === null) {
+          if (lowerCaseQuery.charAt(0) === bodyText.charAt(j)) {
+            for (let k = 1, o = lengthOfQuery; k < o; k++) {
+              if (matched === false) {
+                break;
+              }
+              if (lowerCaseQuery.charAt(k) === bodyText.charAt(j + k)) {
+                matched = true;
+              } else {
+                matched = false;
+              }
+            }
+          }
+        }
+      }
+      if (scoreAdded) {
+        let obj = {};
+        obj[i] = score;
+        matchingArr.push(obj);
+      }
+    }
+    for (let l = 0, p = matchingArr.length; l < p; l++) {
+      if (matchedArr.length) {
+        let foundSameKey = false;
+        for (let h = 0, q = matchedArr.length; h < q; h++) {
+          let keyNameOfMatchingArray = Object.keys(matchingArr[l]);
+          if (matchedArr[h][keyNameOfMatchingArray]) {
+            foundSameKey = true;
+            matchedArr[h][keyNameOfMatchingArray] += matchingArr[l][keyNameOfMatchingArray];
+          }
+        }
+        if (!foundSameKey) {
+          matchedArr.push(matchingArr[l]);
+        }
+      } else {
+        matchedArr.push(matchingArr[l]);
+      }
+    }
+    console.log(this.state.matchedData.map((item, index) => console.log(item[index])));
+    this.setState({
+      matchedData: matchedArr,
+    });
   }
 
   search(data, query) {
@@ -126,8 +129,8 @@ class App extends React.Component {
     let userInput = filterUserInput(query);
     let lowerCaseQuery = userInput[0];
     let lengthOfQuery = userInput[1];
-    scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
-    scoringData(data, context.title, lowerCaseQuery, lengthOfQuery, matchedArr);
+    this.scoringData(data, context.body, lowerCaseQuery, lengthOfQuery, matchedArr);
+    this.scoringData(data, context.title, lowerCaseQuery, lengthOfQuery, matchedArr);
     console.log(matchedArr);
   }
 
