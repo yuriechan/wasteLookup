@@ -30,6 +30,30 @@ function filterHTMLEntitity(body) {
   return bodyText;
 }
 
+function orderByDescending(arr) {
+  let orderedArr = [];
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (!orderedArr.length) {
+      orderedArr.push(arr[i]);
+    } else {
+      for (let j = 0, m = orderedArr.length; j < m; j++) {
+        if (arr[i][Object.keys(arr[i])] > orderedArr[j][Object.keys(orderedArr[j])]) {
+          if (j + 1 === m) {
+            orderedArr.splice(m, 0, arr[i]);
+          } else {
+            continue;
+          }
+        } else {
+          orderedArr.splice(j, 0, arr[i]);
+          break;
+        }
+      }
+    }
+  }
+  console.log(orderedArr);
+  return orderedArr;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -145,8 +169,8 @@ class App extends React.Component {
     let titleArr = this.scoringData(data, context.title, query, bodyArr);
     let categoryArr = this.scoringData(data, context.category, query, titleArr);
     let keywordsArr = this.scoringData(data, context.keywords, query, categoryArr);
-
-    let totalArr = keywordsArr;
+    console.log(keywordsArr);
+    let totalArr = orderByDescending(keywordsArr);
     this.setState({
       matchedData: totalArr,
     });
