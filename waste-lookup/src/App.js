@@ -205,20 +205,20 @@ class App extends React.Component {
     return { __html: txt.value };
   };
 
-  handleStarClick = () => {
+  handleStarClick = event => {
+    event.preventDefault();
     let favoriteArr = this.state.favoritedData;
-    this.state.matchedData.forEach(item => {
-      let starIcon = document.getElementById(item).getElementsByClassName("SearchResults__header")[0].childNodes[0];
-      let starIconColor = starIcon.getAttribute("color");
+    let id = event.currentTarget.id;
+    let starIcon = document.getElementById(id).getElementsByClassName("SearchResults__header")[0].childNodes[0];
+    let starIconColor = starIcon.getAttribute("color");
 
-      if (starIconColor === "#D8D8D8") {
-        starIcon.setAttribute("color", "#EDD943");
-        favoriteArr.push(item);
-      } else if (starIconColor === "#EDD943") {
-        starIcon.setAttribute("color", "#D8D8D8");
-        favoriteArr.pop(item);
-      }
-    });
+    if (starIconColor === "#D8D8D8") {
+      starIcon.setAttribute("color", "#EDD943");
+      favoriteArr.push(id);
+    } else if (starIconColor === "#EDD943") {
+      starIcon.setAttribute("color", "#D8D8D8");
+      favoriteArr.pop(id);
+    }
     this.setState({ favoritedData: favoriteArr });
   };
 
@@ -238,8 +238,8 @@ class App extends React.Component {
             return (
               <SearchResults
                 id={Object.keys(item)}
-                color={this.handleStarColor(Object.keys(item)) ? "#EDD943" : "#D8D8D8"}
-                onclick={this.handleStarClick}
+                color={this.handleStarColor(Object.keys(item)[0]) ? "#EDD943" : "#D8D8D8"}
+                onclick={event => this.handleStarClick(event)}
                 key={Object.keys(item)}
                 title={this.state.data[Object.keys(item)].title}
                 children={this.decodeHtmlEntity(this.state.data[Object.keys(item)].body)}
@@ -272,7 +272,7 @@ class App extends React.Component {
             return (
               <SearchResults
                 color={this.handleStarColor(item) ? "#EDD943" : "#D8D8D8"}
-                onclick={this.handleStarClick}
+                onclick={event => this.handleStarClick(event)}
                 id={item}
                 key={item}
                 title={this.state.data[item].title}
