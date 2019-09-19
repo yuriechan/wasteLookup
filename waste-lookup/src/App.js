@@ -30,27 +30,6 @@ function filterHTMLEntitity(body) {
   return bodyText;
 }
 
-function addValueOfSameKey(matchedArr, matchingArr) {
-  for (let l = 0, p = matchingArr.length; l < p; l++) {
-    if (matchedArr.length) {
-      let foundSameKey = false;
-      for (let h = 0, q = matchedArr.length; h < q; h++) {
-        let keyNameOfMatchingArray = Object.keys(matchingArr[l])[0];
-        if (matchedArr[h][keyNameOfMatchingArray]) {
-          foundSameKey = true;
-          matchedArr[h][keyNameOfMatchingArray] += matchingArr[l][keyNameOfMatchingArray];
-        }
-      }
-      if (!foundSameKey) {
-        matchedArr.push(matchingArr[l]);
-      }
-    } else {
-      matchedArr.push(matchingArr[l]);
-    }
-  }
-  return matchedArr;
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -75,12 +54,12 @@ class App extends React.Component {
       });
   }
 
-  scoringData(data, property, query) {
+  scoringData(data, property, query, arr) {
     let userInput = filterUserInput(query);
     let lowerCaseQuery = userInput[0];
     let lengthOfQuery = userInput[1];
 
-    let matchedArr = [];
+    let matchedArr = arr;
     let matchingArr = [];
     for (let i = 0, n = data.length; i < n; i++) {
       let body = data[i][property];
@@ -116,13 +95,35 @@ class App extends React.Component {
       if (scoreAdded) {
         let obj = {};
         obj[i] = score;
-        console.log(property);
-        console.log(obj);
         matchingArr.push(obj);
       }
     }
-    let totalMatchedArr = addValueOfSameKey(matchedArr, matchingArr);
-    return totalMatchedArr;
+
+    for (let g = 0, r = matchingArr.length; g < r; g++) {
+      if (matchedArr.length) {
+        let foundSameKey = false;
+        for (let f = 0, s = matchedArr.length; f < s; f++) {
+          if (Object.keys(matchedArr[f])[0] === Object.keys(matchingArr[g])[0]) {
+            foundSameKey = true;
+          } else {
+            foundSameKey = false;
+          }
+          if (foundSameKey) {
+            let valueOfMatchedItem = matchedArr[f][Object.keys(matchedArr[f])];
+            let valueOfMatchingItem = matchingArr[g][Object.keys(matchingArr[g])];
+            valueOfMatchedItem += valueOfMatchingItem;
+            matchedArr[f][Object.keys(matchedArr[f])] = valueOfMatchedItem;
+            break;
+          }
+        }
+        if (!foundSameKey) {
+          matchedArr.push(matchingArr[g]);
+        }
+      } else {
+        matchedArr.push(matchingArr[g]);
+      }
+    }
+    return matchedArr;
   }
 
   search(data, query) {
@@ -140,15 +141,14 @@ class App extends React.Component {
     };
     let matchedArr = [];
 
-    let bodyArr = this.scoringData(data, context.body, query);
-    let titleArr = this.scoringData(data, context.title, query);
-    let categoryArr = this.scoringData(data, context.category, query);
-    let keywordsArr = this.scoringData(data, context.keywords, query);
+    let bodyArr = this.scoringData(data, context.body, query, matchedArr);
+    let titleArr = this.scoringData(data, context.title, query, bodyArr);
+    let categoryArr = this.scoringData(data, context.category, query, titleArr);
+    let keywordsArr = this.scoringData(data, context.keywords, query, categoryArr);
 
-    let totalArr = matchedArr.concat(bodyArr, titleArr, categoryArr, keywordsArr);
-    let totalMatchedArr = addValueOfSameKey(matchedArr, totalArr);
+    let totalArr = keywordsArr;
     this.setState({
-      matchedData: totalMatchedArr,
+      matchedData: totalArr,
     });
   }
 
