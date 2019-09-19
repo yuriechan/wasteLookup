@@ -39,18 +39,22 @@ function orderByDescending(arr) {
       for (let j = 0, m = orderedArr.length; j < m; j++) {
         if (arr[i][Object.keys(arr[i])] > orderedArr[j][Object.keys(orderedArr[j])]) {
           if (j + 1 === m) {
-            orderedArr.splice(m, 0, arr[i]);
+            orderedArr.splice(0, 0, arr[i]);
           } else {
             continue;
           }
-        } else {
+        } else if (arr[i][Object.keys(arr[i])] === orderedArr[j][Object.keys(orderedArr[j])]) {
           orderedArr.splice(j, 0, arr[i]);
           break;
+        } else {
+          if (j + 1 === m) {
+            orderedArr.splice(m, 0, arr[i]);
+          }
+          continue;
         }
       }
     }
   }
-  console.log(orderedArr);
   return orderedArr;
 }
 
@@ -169,7 +173,6 @@ class App extends React.Component {
     let titleArr = this.scoringData(data, context.title, query, bodyArr);
     let categoryArr = this.scoringData(data, context.category, query, titleArr);
     let keywordsArr = this.scoringData(data, context.keywords, query, categoryArr);
-    console.log(keywordsArr);
     let totalArr = orderByDescending(keywordsArr);
     this.setState({
       matchedData: totalArr,
