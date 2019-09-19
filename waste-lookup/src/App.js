@@ -24,7 +24,7 @@ function filterHTMLEntitity(body) {
   txt.innerHTML = body;
   let decodedBody = txt.value;
   let bodyText = decodedBody
-    .replace(/\<[^<>]*\>/g, "")
+    .replace(/<[^<>]*>/g, "")
     .replace(/&nbsp;/g, " ")
     .toLowerCase();
   return bodyText;
@@ -84,36 +84,40 @@ class App extends React.Component {
     let matchingArr = [];
     for (let i = 0, n = data.length; i < n; i++) {
       let body = data[i][property];
-      let bodyText = filterHTMLEntitity(body);
-      let matched = null;
+      let bodyText = "";
+      if (property === "body") {
+        bodyText = filterHTMLEntitity(body);
+      } else {
+        bodyText = body;
+      }
+
+      let sameChar = false;
       let scoreAdded = false;
       let score = 0;
 
       for (let j = 0, m = bodyText.length; j < m; j++) {
-        if (matched) {
-          score = score + 1;
-          scoreAdded = true;
-          matched = null;
-        } else if (matched === false) {
-          matched = null;
-        } else if (matched === null) {
-          if (lowerCaseQuery.charAt(0) === bodyText.charAt(j)) {
-            for (let k = 1, o = lengthOfQuery; k < o; k++) {
-              if (matched === false) {
-                break;
-              }
-              if (lowerCaseQuery.charAt(k) === bodyText.charAt(j + k)) {
-                matched = true;
-              } else {
-                matched = false;
-              }
+        if (lowerCaseQuery.charAt(0) === bodyText.charAt(j)) {
+          for (let k = 1, o = lengthOfQuery; k < o; k++) {
+            if (lowerCaseQuery.charAt(k) === bodyText.charAt(j + k)) {
+              sameChar = true;
+            } else {
+              sameChar = false;
+              break;
             }
           }
+          if (sameChar) {
+            score = score + 1;
+            scoreAdded = true;
+          }
+        } else {
+          continue;
         }
       }
       if (scoreAdded) {
         let obj = {};
         obj[i] = score;
+        console.log(property);
+        console.log(obj);
         matchingArr.push(obj);
       }
     }
@@ -134,9 +138,6 @@ class App extends React.Component {
       category: "category",
       keywords: "keywords",
     };
-    this.setState({
-      matchedData: [],
-    });
     let matchedArr = [];
 
     let bodyArr = this.scoringData(data, context.body, query);
