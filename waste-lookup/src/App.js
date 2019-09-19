@@ -49,8 +49,9 @@ function orderByDescending(arr) {
         } else {
           if (j + 1 === m) {
             orderedArr.splice(m, 0, arr[i]);
+          } else {
+            continue;
           }
-          continue;
         }
       }
     }
