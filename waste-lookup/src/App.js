@@ -217,7 +217,10 @@ class App extends React.Component {
       favoriteArr.push(id);
     } else if (starIconColor === "#EDD943") {
       starIcon.setAttribute("color", "#D8D8D8");
-      favoriteArr.pop(id);
+      let index = favoriteArr.indexOf(id);
+      if (index > -1) {
+        favoriteArr.splice(index, 1);
+      }
     }
     this.setState({ favoritedData: favoriteArr });
   };
