@@ -1,22 +1,21 @@
 import React from "react";
 import "./SearchResults.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SearchResult from "./SearchResult/SearchResult";
 
-class SearchResult extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
+const SearchResults = props => {
+  return props.matchedData.map(item => {
     return (
-      <div id={this.props.id} onClick={this.props.onclick} className="SearchResults__container">
-        <div className="SearchResults__header">
-          <FontAwesomeIcon color={this.props.color} icon="star" className="SearchResults__header--icon" />
-          <p className="SearchResults__header--title">{this.props.title}</p>
-        </div>
-        <div className="SearchResults__body" dangerouslySetInnerHTML={this.props.children}></div>
+      <div className="SearchResults__wrapper">
+        <SearchResult
+          id={Object.keys(item)}
+          color={props.starColor(Object.keys(item)[0]) ? "#EDD943" : "#D8D8D8"}
+          onclick={event => props.starClicked(event)}
+          key={Object.keys(item)}
+          title={props.data[Object.keys(item)].title}
+          children={props.decodeHtmlEntity(props.data[Object.keys(item)].body)}
+        />
       </div>
     );
-  }
-}
-export default SearchResult;
+  });
+};
+export default SearchResults;

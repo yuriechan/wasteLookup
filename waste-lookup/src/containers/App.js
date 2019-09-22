@@ -236,27 +236,20 @@ class App extends React.Component {
     let results = null;
     if (this.state.matchedData.length) {
       results = (
-        <div className="SearchResults__wrapper">
-          {this.state.matchedData.map(item => {
-            return (
-              <SearchResults
-                id={Object.keys(item)}
-                color={this.handleStarColor(Object.keys(item)[0]) ? "#EDD943" : "#D8D8D8"}
-                onclick={event => this.handleStarClick(event)}
-                key={Object.keys(item)}
-                title={this.state.data[Object.keys(item)].title}
-                children={this.decodeHtmlEntity(this.state.data[Object.keys(item)].body)}
-              />
-            );
-          })}
-        </div>
+        <SearchResults
+          matchedData={this.state.matchedData}
+          starColor={this.handleStarColor}
+          starClicked={this.handleStarClick}
+          data={this.state.data}
+          decodeHtmlEntity={this.decodeHtmlEntity}
+        />
       );
     } else if (this.state.searched) {
       results = <div>no result</div>;
     }
     return (
       <div className="App">
-        <Header title="Toronto Waste Lookup" />
+        <Header />
         <div className="SearchSection__container">
           <SearchBar
             onclick={() => {
