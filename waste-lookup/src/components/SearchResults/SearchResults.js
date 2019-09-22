@@ -1,5 +1,5 @@
 import React from "react";
-import "./SearchResult.css";
+import "./SearchResults.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class SearchResult extends React.Component {

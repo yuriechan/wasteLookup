@@ -3,10 +3,10 @@ import "./App.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "../components/Header/Header";
-import SearchBar from "../components/SearchBar/SearchBar";
-import SearchResults from "../components/SearchResults/SearchResult";
-import FavoriteList from "../components/FavoriteLists/FavoriteList";
+import Header from "../components/Cockpit/Header/Header";
+import SearchBar from "../components/Cockpit/SearchBar/SearchBar";
+import SearchResults from "../components/SearchResults/SearchResults";
+import FavoriteLists from "../components/FavoriteLists/FavoriteLists";
 library.add(faStar);
 
 function filterUserInput(query) {
@@ -270,7 +270,7 @@ class App extends React.Component {
           />
           {results}
         </div>
-        <FavoriteList
+        <FavoriteLists
           children={this.state.favoritedData.map(item => {
             return (
               <SearchResults

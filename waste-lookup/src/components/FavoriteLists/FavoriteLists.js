@@ -1,9 +1,9 @@
 import React from "react";
-import "./FavoriteList.css";
+import "./FavoriteLists.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-class FavoriteList extends React.Component {
+class FavoriteLists extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,4 +31,4 @@ class FavoriteList extends React.Component {
   }
 }
 
-export default FavoriteList;
+export default FavoriteLists;
