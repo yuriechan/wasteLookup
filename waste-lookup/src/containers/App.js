@@ -3,10 +3,10 @@ import "./App.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "../components/HeaderComponent/Header";
-import SearchBar from "../components/SearchBarComponent/SearchBar";
-import SearchResults from "../components/SearchResultComponent/SearchResult";
-import FavoriteList from "../components/FavoriteListComponent/FavoriteList";
+import Header from "../components/Header/Header";
+import SearchBar from "../components/SearchBar/SearchBar";
+import SearchResults from "../components/SearchResults/SearchResult";
+import FavoriteList from "../components/FavoriteLists/FavoriteList";
 library.add(faStar);
 
 function filterUserInput(query) {
