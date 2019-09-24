@@ -3,8 +3,8 @@ import "./App.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "../components/Cockpit/Header/Header";
-import SearchBar from "../components/Cockpit/SearchBar/SearchBar";
+import Header from "../components/Header/Header";
+import SearchBar from "../components/SearchBar/SearchBar";
 import SearchResults from "../components/SearchResults/SearchResults";
 import FavoriteModal from "../components/FavoriteModal/FavoriteModal";
 import { filterUserInput, filterHTMLEntitity, orderByDescending } from "../utils/utils";
