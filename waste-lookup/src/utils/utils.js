@@ -26,30 +26,7 @@ export function filterHTMLEntitity(body) {
 }
 
 export function orderByDescending(arr) {
-  let orderedArr = [];
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if (!orderedArr.length) {
-      orderedArr.push(arr[i]);
-    } else {
-      for (let j = 0, m = orderedArr.length; j < m; j++) {
-        if (arr[i][Object.keys(arr[i])] > orderedArr[j][Object.keys(orderedArr[j])]) {
-          if (j + 1 === m) {
-            orderedArr.splice(0, 0, arr[i]);
-          } else {
-            continue;
-          }
-        } else if (arr[i][Object.keys(arr[i])] === orderedArr[j][Object.keys(orderedArr[j])]) {
-          orderedArr.splice(j, 0, arr[i]);
-          break;
-        } else {
-          if (j + 1 === m) {
-            orderedArr.splice(m, 0, arr[i]);
-          } else {
-            continue;
-          }
-        }
-      }
-    }
-  }
-  return orderedArr;
+  return arr.sort(function(a, b) {
+    return Object.values(b) - Object.values(a);
+  });
 }
