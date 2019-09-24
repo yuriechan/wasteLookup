@@ -187,7 +187,6 @@ class App extends React.Component {
             starColor={this.handleStarColor}
             starClicked={this.handleStarClick}
             data={this.state.data}
-            decodeHtmlEntity={this.decodeHtmlEntity}
           />
         </div>
       );
