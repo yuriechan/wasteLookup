@@ -6,58 +6,9 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/Cockpit/Header/Header";
 import SearchBar from "../components/Cockpit/SearchBar/SearchBar";
 import SearchResults from "../components/SearchResults/SearchResults";
-import FavoriteLists from "../components/FavoriteLists/FavoriteLists";
+import FavoriteModal from "../components/FavoriteModal/FavoriteModal";
+import { filterUserInput, filterHTMLEntitity, orderByDescending } from "../utils/utils";
 library.add(faStar);
-
-function filterUserInput(query) {
-  let lowerCaseQuery = query.toLowerCase();
-  let lengthOfQuery = lowerCaseQuery.length;
-  while (lowerCaseQuery.charAt(lengthOfQuery - 1) === " ") {
-    lowerCaseQuery = lowerCaseQuery.slice(0, lengthOfQuery - 1);
-    lengthOfQuery = lowerCaseQuery.length;
-  }
-  return [lowerCaseQuery, lengthOfQuery];
-}
-
-function filterHTMLEntitity(body) {
-  let txt = document.createElement("textarea");
-  txt.innerHTML = body;
-  let decodedBody = txt.value;
-  let bodyText = decodedBody
-    .replace(/<[^<>]*>/g, "")
-    .replace(/&nbsp;/g, " ")
-    .toLowerCase();
-  return bodyText;
-}
-
-function orderByDescending(arr) {
-  let orderedArr = [];
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if (!orderedArr.length) {
-      orderedArr.push(arr[i]);
-    } else {
-      for (let j = 0, m = orderedArr.length; j < m; j++) {
-        if (arr[i][Object.keys(arr[i])] > orderedArr[j][Object.keys(orderedArr[j])]) {
-          if (j + 1 === m) {
-            orderedArr.splice(0, 0, arr[i]);
-          } else {
-            continue;
-          }
-        } else if (arr[i][Object.keys(arr[i])] === orderedArr[j][Object.keys(orderedArr[j])]) {
-          orderedArr.splice(j, 0, arr[i]);
-          break;
-        } else {
-          if (j + 1 === m) {
-            orderedArr.splice(m, 0, arr[i]);
-          } else {
-            continue;
-          }
-        }
-      }
-    }
-  }
-  return orderedArr;
-}
 
 class App extends React.Component {
   constructor(props) {
@@ -199,12 +150,6 @@ class App extends React.Component {
     }
   };
 
-  decodeHtmlEntity = html => {
-    let txt = document.createElement("textarea");
-    txt.innerHTML = html;
-    return { __html: txt.value };
-  };
-
   handleStarClick = event => {
     event.preventDefault();
     let favoriteArr = this.state.favoritedData;
@@ -236,13 +181,15 @@ class App extends React.Component {
     let results = null;
     if (this.state.matchedData.length) {
       results = (
-        <SearchResults
-          matchedData={this.state.matchedData}
-          starColor={this.handleStarColor}
-          starClicked={this.handleStarClick}
-          data={this.state.data}
-          decodeHtmlEntity={this.decodeHtmlEntity}
-        />
+        <div className="SearchResults__wrapper">
+          <SearchResults
+            matchedData={this.state.matchedData}
+            starColor={this.handleStarColor}
+            starClicked={this.handleStarClick}
+            data={this.state.data}
+            decodeHtmlEntity={this.decodeHtmlEntity}
+          />
+        </div>
       );
     } else if (this.state.searched) {
       results = <div>no result</div>;
@@ -263,19 +210,11 @@ class App extends React.Component {
           />
           {results}
         </div>
-        <FavoriteLists
-          children={this.state.favoritedData.map(item => {
-            return (
-              <SearchResults
-                color={this.handleStarColor(item) ? "#EDD943" : "#D8D8D8"}
-                onclick={event => this.handleStarClick(event)}
-                id={item}
-                key={item}
-                title={this.state.data[item].title}
-                children={this.decodeHtmlEntity(this.state.data[item].body)}
-              />
-            );
-          })}
+        <FavoriteModal
+          starClicked={this.handleStarClick}
+          starColor={this.handleStarColor}
+          data={this.state.data}
+          favoritedData={this.state.favoritedData}
         />
       </div>
     );
