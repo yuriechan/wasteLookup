@@ -154,14 +154,22 @@ class App extends React.Component {
     event.preventDefault();
     let favoriteArr = this.state.favoritedData;
     let id = event.currentTarget.id;
-    let starIcon = document.getElementById(id).getElementsByClassName("SearchResults__header")[0].childNodes[0];
-    let starIconColor = starIcon.getAttribute("color");
+    let className = event.currentTarget.getAttribute("class");
 
-    if (starIconColor === "#D8D8D8") {
-      starIcon.setAttribute("color", "#EDD943");
-      favoriteArr.push(id);
-    } else if (starIconColor === "#EDD943") {
-      starIcon.setAttribute("color", "#D8D8D8");
+    if (className === "SearchResult__container") {
+      let starIcon = document.getElementById(id).getElementsByClassName("SearchResult__header--icon")[0];
+      let starIconColor = starIcon.getAttribute("color");
+      if (starIconColor === "#D8D8D8") {
+        starIcon.setAttribute("color", "#EDD943");
+        favoriteArr.push(id);
+      } else if (starIconColor === "#EDD943") {
+        starIcon.setAttribute("color", "#D8D8D8");
+        let index = favoriteArr.indexOf(id);
+        if (index > -1) {
+          favoriteArr.splice(index, 1);
+        }
+      }
+    } else if (className === "FavoriteList__container") {
       let index = favoriteArr.indexOf(id);
       if (index > -1) {
         favoriteArr.splice(index, 1);
