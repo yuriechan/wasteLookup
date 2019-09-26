@@ -20,7 +20,7 @@ class FavoriteModal extends React.Component {
 
   render() {
     return (
-      <div className="FavoriteList__container">
+      <div className="FavoriteList__wrapper">
         <FontAwesomeIcon onClick={this.toggle} icon="star" color="#EDD943" />
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Your Favorites.</ModalHeader>

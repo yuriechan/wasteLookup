@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FavoriteList = props => {
   return (
-    <div id={props.id} onClick={props.onclick}>
+    <div id={props.id} onClick={props.onclick} className="FavoriteList__container">
       <div className="FavoriteList__header">
         <FontAwesomeIcon color={props.color} icon="star" className="FavoriteList__header--icon" />
         <p className="FavoriteList__header--title">{props.title}</p>

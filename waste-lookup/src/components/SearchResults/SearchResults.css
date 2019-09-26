@@ -1,4 +1,8 @@
-.SearchResults__container {
+.SearchResults__wrapper {
+    height: 80%;
+}
+
+.SearchResult__container {
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -7,27 +11,27 @@
     transition: 0.5s;
 }
 
-.SearchResults__container:hover{
+.SearchResult__container:hover{
     background-color: rgba(164,193,226,0.2);
     border-radius: 10px;
 }
 
-.SearchResults__header {
+.SearchResult__header {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.SearchResults__header--icon {
+.SearchResult__header--icon {
     margin-right: 1vw;
 }
 
-.SearchResults__header--title {
+.SearchResults_header--title {
     margin: unset;
 }
 
-.SearchResults__body{ 
+.SearchResult__body{ 
     text-align: left;
 }
 
