@@ -1,9 +1,10 @@
 import React from "react";
-import "./FavoriteList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import FavoriteLists from "./FavoriteLists/FavoriteLists";
+import "./FavoriteModal.css";
 
-class FavoriteList extends React.Component {
+class FavoriteModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,11 +20,18 @@ class FavoriteList extends React.Component {
 
   render() {
     return (
-      <div className="FavoriteList__container">
+      <div className="FavoriteList__wrapper">
         <FontAwesomeIcon onClick={this.toggle} icon="star" color="#EDD943" />
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Your Favorites.</ModalHeader>
-          <ModalBody>{this.props.children}</ModalBody>
+          <ModalBody>
+            <FavoriteLists
+              favoritedData={this.props.favoritedData}
+              starClicked={this.props.starClicked}
+              starColor={this.props.starColor}
+              data={this.props.data}
+            />
+          </ModalBody>
           <ModalFooter></ModalFooter>
         </Modal>
       </div>
@@ -31,4 +39,4 @@ class FavoriteList extends React.Component {
   }
 }
 
-export default FavoriteList;
+export default FavoriteModal;

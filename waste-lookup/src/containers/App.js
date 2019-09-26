@@ -3,61 +3,12 @@ import "./App.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "./components/HeaderComponent/Header";
-import SearchBar from "./components/SearchBarComponent/SearchBar";
-import SearchResults from "./components/SearchResultComponent/SearchResult";
-import FavoriteList from "./components/FavoriteListComponent/FavoriteList";
+import Header from "../components/Header/Header";
+import SearchBar from "../components/SearchBar/SearchBar";
+import SearchResults from "../components/SearchResults/SearchResults";
+import FavoriteModal from "../components/FavoriteModal/FavoriteModal";
+import { filterUserInput, filterHTMLEntitity, orderByDescending, removeFavoriteItem } from "../utils/utils";
 library.add(faStar);
-
-function filterUserInput(query) {
-  let lowerCaseQuery = query.toLowerCase();
-  let lengthOfQuery = lowerCaseQuery.length;
-  while (lowerCaseQuery.charAt(lengthOfQuery - 1) === " ") {
-    lowerCaseQuery = lowerCaseQuery.slice(0, lengthOfQuery - 1);
-    lengthOfQuery = lowerCaseQuery.length;
-  }
-  return [lowerCaseQuery, lengthOfQuery];
-}
-
-function filterHTMLEntitity(body) {
-  let txt = document.createElement("textarea");
-  txt.innerHTML = body;
-  let decodedBody = txt.value;
-  let bodyText = decodedBody
-    .replace(/<[^<>]*>/g, "")
-    .replace(/&nbsp;/g, " ")
-    .toLowerCase();
-  return bodyText;
-}
-
-function orderByDescending(arr) {
-  let orderedArr = [];
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if (!orderedArr.length) {
-      orderedArr.push(arr[i]);
-    } else {
-      for (let j = 0, m = orderedArr.length; j < m; j++) {
-        if (arr[i][Object.keys(arr[i])] > orderedArr[j][Object.keys(orderedArr[j])]) {
-          if (j + 1 === m) {
-            orderedArr.splice(0, 0, arr[i]);
-          } else {
-            continue;
-          }
-        } else if (arr[i][Object.keys(arr[i])] === orderedArr[j][Object.keys(orderedArr[j])]) {
-          orderedArr.splice(j, 0, arr[i]);
-          break;
-        } else {
-          if (j + 1 === m) {
-            orderedArr.splice(m, 0, arr[i]);
-          } else {
-            continue;
-          }
-        }
-      }
-    }
-  }
-  return orderedArr;
-}
 
 class App extends React.Component {
   constructor(props) {
@@ -199,28 +150,24 @@ class App extends React.Component {
     }
   };
 
-  decodeHtmlEntity = html => {
-    let txt = document.createElement("textarea");
-    txt.innerHTML = html;
-    return { __html: txt.value };
-  };
-
   handleStarClick = event => {
     event.preventDefault();
     let favoriteArr = this.state.favoritedData;
     let id = event.currentTarget.id;
-    let starIcon = document.getElementById(id).getElementsByClassName("SearchResults__header")[0].childNodes[0];
-    let starIconColor = starIcon.getAttribute("color");
+    let className = event.currentTarget.getAttribute("class");
 
-    if (starIconColor === "#D8D8D8") {
-      starIcon.setAttribute("color", "#EDD943");
-      favoriteArr.push(id);
-    } else if (starIconColor === "#EDD943") {
-      starIcon.setAttribute("color", "#D8D8D8");
-      let index = favoriteArr.indexOf(id);
-      if (index > -1) {
-        favoriteArr.splice(index, 1);
+    if (className === "SearchResult__container") {
+      let starIcon = document.getElementById(id).getElementsByClassName("SearchResult__header--icon")[0];
+      let starIconColor = starIcon.getAttribute("color");
+      if (starIconColor === "#D8D8D8") {
+        starIcon.setAttribute("color", "#EDD943");
+        favoriteArr.push(id);
+      } else if (starIconColor === "#EDD943") {
+        starIcon.setAttribute("color", "#D8D8D8");
+        removeFavoriteItem(id, favoriteArr);
       }
+    } else if (className === "FavoriteList__container") {
+      removeFavoriteItem(id, favoriteArr);
     }
     this.setState({ favoritedData: favoriteArr });
   };
@@ -237,18 +184,12 @@ class App extends React.Component {
     if (this.state.matchedData.length) {
       results = (
         <div className="SearchResults__wrapper">
-          {this.state.matchedData.map(item => {
-            return (
-              <SearchResults
-                id={Object.keys(item)}
-                color={this.handleStarColor(Object.keys(item)[0]) ? "#EDD943" : "#D8D8D8"}
-                onclick={event => this.handleStarClick(event)}
-                key={Object.keys(item)}
-                title={this.state.data[Object.keys(item)].title}
-                children={this.decodeHtmlEntity(this.state.data[Object.keys(item)].body)}
-              />
-            );
-          })}
+          <SearchResults
+            matchedData={this.state.matchedData}
+            starColor={this.handleStarColor}
+            starClicked={this.handleStarClick}
+            data={this.state.data}
+          />
         </div>
       );
     } else if (this.state.searched) {
@@ -256,7 +197,7 @@ class App extends React.Component {
     }
     return (
       <div className="App">
-        <Header title="Toronto Waste Lookup" />
+        <Header />
         <div className="SearchSection__container">
           <SearchBar
             onclick={() => {
@@ -270,19 +211,11 @@ class App extends React.Component {
           />
           {results}
         </div>
-        <FavoriteList
-          children={this.state.favoritedData.map(item => {
-            return (
-              <SearchResults
-                color={this.handleStarColor(item) ? "#EDD943" : "#D8D8D8"}
-                onclick={event => this.handleStarClick(event)}
-                id={item}
-                key={item}
-                title={this.state.data[item].title}
-                children={this.decodeHtmlEntity(this.state.data[item].body)}
-              />
-            );
-          })}
+        <FavoriteModal
+          starClicked={this.handleStarClick}
+          starColor={this.handleStarColor}
+          data={this.state.data}
+          favoritedData={this.state.favoritedData}
         />
       </div>
     );
