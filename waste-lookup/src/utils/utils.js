@@ -30,3 +30,10 @@ export function orderByDescending(arr) {
     return Object.values(b) - Object.values(a);
   });
 }
+
+export function removeFavoriteItem(id, arr) {
+  let index = arr.indexOf(id);
+  if (index > -1) {
+    arr.splice(index, 1);
+  }
+}

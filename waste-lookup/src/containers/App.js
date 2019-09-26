@@ -7,7 +7,7 @@ import Header from "../components/Header/Header";
 import SearchBar from "../components/SearchBar/SearchBar";
 import SearchResults from "../components/SearchResults/SearchResults";
 import FavoriteModal from "../components/FavoriteModal/FavoriteModal";
-import { filterUserInput, filterHTMLEntitity, orderByDescending } from "../utils/utils";
+import { filterUserInput, filterHTMLEntitity, orderByDescending, removeFavoriteItem } from "../utils/utils";
 library.add(faStar);
 
 class App extends React.Component {
@@ -164,16 +164,10 @@ class App extends React.Component {
         favoriteArr.push(id);
       } else if (starIconColor === "#EDD943") {
         starIcon.setAttribute("color", "#D8D8D8");
-        let index = favoriteArr.indexOf(id);
-        if (index > -1) {
-          favoriteArr.splice(index, 1);
-        }
+        removeFavoriteItem(id, favoriteArr);
       }
     } else if (className === "FavoriteList__container") {
-      let index = favoriteArr.indexOf(id);
-      if (index > -1) {
-        favoriteArr.splice(index, 1);
-      }
+      removeFavoriteItem(id, favoriteArr);
     }
     this.setState({ favoritedData: favoriteArr });
   };
