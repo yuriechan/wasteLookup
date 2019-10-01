@@ -44,15 +44,42 @@ export function createObjectArr(index, score) {
   return obj;
 }
 
-export function exactMatch(query, sentence) {
+export function findMatchingWord(userQueryArr, dataContext) {
   let charRegex = /^[a-z]|[-]+$/;
+  let totalCount = 0;
+  for (let h = 0, l = userQueryArr.length; h < l; h++) {
+    let counter = 0;
+    for (let i = 0, n = dataContext.length; i < n; i++) {
+      let includeQuery = false;
+
+      if (userQueryArr[h].charAt(0) === dataContext.charAt(i)) {
+        for (let j = 1, m = userQueryArr[h].length; j < m; j++) {
+          if (userQueryArr[h].charAt(j) !== dataContext.charAt(i + j)) {
+            includeQuery = false;
+            break;
+          } else {
+            includeQuery = true;
+          }
+        }
+      }
+      if (includeQuery) {
+        if (!charRegex.test(dataContext.charAt(i - 1)) && !charRegex.test(dataContext.charAt(i + userQueryArr[h].length))) {
+          counter = counter + 1;
+        }
+      }
+    }
+    totalCount = totalCount + counter;
+  }
+  return totalCount;
+}
+
+export function exactMatch(query, sentence) {
   let negationRegex = /(^not|^non)+/g;
   let nonRegex = /(^non-)+/g;
   let spaceRegex = /\s/g;
   let splitQueryArr = [];
   let lowerCaseQ = query.toLowerCase();
   let lowerCaseS = sentence.toLowerCase();
-  let counter = 0;
   let totalCount = 0;
 
   if (!nonRegex.test(lowerCaseQ)) {
@@ -71,35 +98,11 @@ export function exactMatch(query, sentence) {
   } else {
     splitQueryArr.push(lowerCaseQ);
   }
-
-  for (let h = 0, l = splitQueryArr.length; h < l; h++) {
-    counter = 0;
-    for (let i = 0, n = sentence.length; i < n; i++) {
-      let includeQuery = false;
-
-      if (splitQueryArr[h].charAt(0) === lowerCaseS.charAt(i)) {
-        for (let j = 1, m = splitQueryArr[h].length; j < m; j++) {
-          if (splitQueryArr[h].charAt(j) !== lowerCaseS.charAt(i + j)) {
-            includeQuery = false;
-            break;
-          } else {
-            includeQuery = true;
-          }
-        }
-      }
-      if (includeQuery) {
-        if (!charRegex.test(lowerCaseS.charAt(i - 1)) && !charRegex.test(lowerCaseS.charAt(i + splitQueryArr[h].length))) {
-          counter = counter + 1;
-        }
-      }
-    }
-    totalCount = totalCount + counter;
-  }
+  totalCount = findMatchingWord(splitQueryArr, lowerCaseS);
   return totalCount;
 }
 
 export function addPrefix(query, sentence) {
-  let charRegex = /^[a-z]|[-]+$/;
   let negationRegex = /(^not|^non)+/g;
   let pluralRegex = /(sh$|s$|x$|ch$)+/g;
   let YconsonantRegex = /y$/g;
@@ -111,7 +114,6 @@ export function addPrefix(query, sentence) {
   let splitQueryArr = [];
   let lowerCaseQ = query.toLowerCase();
   let lowerCaseS = sentence.toLowerCase();
-  let counter = 0;
   let totalCount = 0;
   let queryLength = lowerCaseQ.length;
 
@@ -166,29 +168,6 @@ export function addPrefix(query, sentence) {
   } else {
     splitQueryArr.push(lowerCaseQ);
   }
-
-  for (let h = 0, l = splitQueryArr.length; h < l; h++) {
-    counter = 0;
-    for (let i = 0, n = sentence.length; i < n; i++) {
-      let includeQuery = false;
-
-      if (splitQueryArr[h].charAt(0) === lowerCaseS.charAt(i)) {
-        for (let j = 1, m = splitQueryArr[h].length; j < m; j++) {
-          if (splitQueryArr[h].charAt(j) !== lowerCaseS.charAt(i + j)) {
-            includeQuery = false;
-            break;
-          } else {
-            includeQuery = true;
-          }
-        }
-      }
-      if (includeQuery) {
-        if (!charRegex.test(lowerCaseS.charAt(i - 1)) && !charRegex.test(lowerCaseS.charAt(i + splitQueryArr[h].length))) {
-          counter = counter + 1;
-        }
-      }
-    }
-    totalCount = totalCount + counter;
-  }
+  totalCount = findMatchingWord(splitQueryArr, lowerCaseS);
   return totalCount;
 }
