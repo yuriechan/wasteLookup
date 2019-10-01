@@ -95,7 +95,6 @@ export function exactMatch(query, sentence) {
     }
     totalCount = totalCount + counter;
   }
-
   return totalCount;
 }
 
@@ -117,7 +116,7 @@ export function addPrefix(query, sentence) {
   let queryLength = lowerCaseQ.length;
 
   if (negationRegex.test(lowerCaseQ)) {
-    return;
+    return totalCount;
   } else if (pluralRegex.test(lowerCaseQ)) {
     let customGeneratedQuery = lowerCaseQ.concat("es");
     lowerCaseQ = customGeneratedQuery;
@@ -191,6 +190,5 @@ export function addPrefix(query, sentence) {
     }
     totalCount = totalCount + counter;
   }
-
   return totalCount;
 }
