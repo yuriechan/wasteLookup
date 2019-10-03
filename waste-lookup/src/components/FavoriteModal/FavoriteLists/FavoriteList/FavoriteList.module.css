@@ -1,0 +1,19 @@
+.FavoriteList__container {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 15px;
+}
+
+.FavoriteList__header {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+
+
+.FavoriteList__header_icon {
+    margin-right: 1vw;
+}
+

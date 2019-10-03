@@ -1,6 +1,31 @@
 html {
   overflow: hidden;
 }
+
+p {
+  margin-bottom: 0em !important;
+}
+
+ul {
+  margin: unset !important;
+  padding-left: 34px !important;
+}
+
+.modal-body {
+  overflow: scroll !important;
+}
+
+.modal-content {
+  height: 70vh !important;
+  width: 35vw !important;
+}
+
+.modal {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important; 
+}
+
 .App {
   text-align: center;
   display: flex;
@@ -17,11 +42,4 @@ html {
   justify-content: flex-start;
 } 
 
-ul {
-  margin: unset !important;
-  padding-left: 34px !important;
-}
 
-.SearchResults__wrapper {
-  overflow: scroll;
-}

@@ -1,5 +1,7 @@
 import React from "react";
 import "./App.css";
+import styles from "../components/SearchResults/SearchResult/SearchResult.module.css";
+import styles_two from "../components/FavoriteModal/FavoriteLists/FavoriteList/FavoriteList.module.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
@@ -92,8 +94,8 @@ class App extends React.Component {
     let id = event.currentTarget.id;
     let className = event.currentTarget.getAttribute("class");
 
-    if (className === "SearchResult__container") {
-      let starIcon = document.getElementById(id).getElementsByClassName("SearchResult__header--icon")[0];
+    if (className === styles.SearchResult__container) {
+      let starIcon = document.getElementById(id).getElementsByClassName(styles.SearchResult__header_icon)[0];
       let starIconColor = starIcon.getAttribute("color");
       if (starIconColor === "#D8D8D8") {
         starIcon.setAttribute("color", "#EDD943");
@@ -102,7 +104,7 @@ class App extends React.Component {
         starIcon.setAttribute("color", "#D8D8D8");
         removeFavoriteItem(id, favoriteArr);
       }
-    } else if (className === "FavoriteList__container") {
+    } else if (className === styles_two.FavoriteList__container) {
       removeFavoriteItem(id, favoriteArr);
     }
     this.setState({ favoritedData: favoriteArr });
@@ -119,14 +121,12 @@ class App extends React.Component {
     let results = null;
     if (this.state.matchedData.length) {
       results = (
-        <div className="SearchResults__wrapper">
-          <SearchResults
-            matchedData={this.state.matchedData}
-            starColor={this.handleStarColor}
-            starClicked={this.handleStarClick}
-            data={this.state.data}
-          />
-        </div>
+        <SearchResults
+          matchedData={this.state.matchedData}
+          starColor={this.handleStarColor}
+          starClicked={this.handleStarClick}
+          data={this.state.data}
+        />
       );
     } else if (this.state.searched) {
       results = <div>no result</div>;

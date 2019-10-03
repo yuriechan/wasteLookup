@@ -1,6 +1,6 @@
 import React from "react";
 import FavoriteList from "./FavoriteList/FavoriteList";
-import "./FavoriteLists.css";
+import "./FavoriteLists.module.css";
 import { decodeHtmlEntity } from "../../../utils/utils";
 
 const FavoriteLists = props => {

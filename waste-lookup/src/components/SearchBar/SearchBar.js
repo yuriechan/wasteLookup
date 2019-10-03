@@ -1,5 +1,5 @@
 import React from "react";
-import "./SearchBar.css";
+import styles from "./SearchBar.module.css";
 import { InputGroup, InputGroupAddon, Input, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -11,8 +11,8 @@ class SearchBar extends React.Component {
   }
   render() {
     return (
-      <div className="SearchBar__container">
-        <InputGroup className="SearchBar__wrapper">
+      <div className={styles.SearchBar__container}>
+        <InputGroup className={styles.SearchBar__wrapper}>
           <Input
             type="text"
             placeholder="search"
