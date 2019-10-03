@@ -1,7 +1,7 @@
 import React from "react";
-import "./App.css";
 import styles from "../components/SearchResults/SearchResult/SearchResult.module.css";
 import styles_two from "../components/FavoriteModal/FavoriteLists/FavoriteList/FavoriteList.module.css";
+import app_styles from "./App.module.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
@@ -132,9 +132,9 @@ class App extends React.Component {
       results = <div>no result</div>;
     }
     return (
-      <div className="App">
+      <div className={app_styles.App}>
         <Header />
-        <div className="SearchSection__container">
+        <div className={app_styles.SearchSection__container}>
           <SearchBar
             onclick={() => {
               this.handleMouseClick();
