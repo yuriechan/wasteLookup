@@ -4,11 +4,12 @@ html {
 
 p {
   margin-bottom: 0em !important;
+  text-align: left;
 }
 
 ul {
   margin: unset !important;
-  padding-left: 34px !important;
+  padding-left: 25px !important;
 }
 
 .App {
@@ -33,3 +34,9 @@ ul {
       width: calc(100% - 3em);
     }
   }
+
+  @media screen and (max-width: 575px) {
+    ul {
+     padding-left: 15px !important;
+  }
+}

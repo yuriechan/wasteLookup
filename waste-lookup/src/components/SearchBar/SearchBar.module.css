@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 20%;
+    padding: 2.5vh;
     /* border: 3px solid yellow; */
 }
 

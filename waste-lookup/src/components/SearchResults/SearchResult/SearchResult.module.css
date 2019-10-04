@@ -5,6 +5,7 @@
     align-items: baseline;
     padding: 15px;
     transition: 0.5s;
+    font-size: inherit;
 }
 
 .SearchResult__container:hover{
@@ -30,3 +31,10 @@
 .SearchResult__body{ 
     text-align: left;
 }
+
+@media screen and (max-width: 575px) {
+    .SearchResult__container {
+      font-size: 0.75rem;
+      padding: 10px;
+    }
+  }

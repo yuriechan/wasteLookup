@@ -5,6 +5,8 @@
     width: calc(100vw - 10vw);
     align-items: center;
     justify-content: flex-start;
+    position: fixed;
+    bottom: 0;
 }
 
 .modal {
@@ -15,11 +17,10 @@
 
 .modal_content {
     height: 70vh !important;
-    /* width: 50vw !important; */
   }
 
-  @media screen and (min-width: 575px) {
+@media screen and (min-width: 575px) {
     .modal_content {
         width: 50vw !important;
-      }
-  }
+    }
+}
