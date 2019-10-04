@@ -22,7 +22,13 @@ class FavoriteModal extends React.Component {
     return (
       <div className={styles.FavoriteList__wrapper}>
         <FontAwesomeIcon onClick={this.toggle} icon="star" color="#EDD943" />
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          contentClassName={styles.modal_content}
+          modalClassName={styles.modal}
+          scrollable={true}
+        >
           <ModalHeader toggle={this.toggle}>Your Favorites.</ModalHeader>
           <ModalBody>
             <FavoriteLists

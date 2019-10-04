@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../components/SearchResults/SearchResult/SearchResult.module.css";
-import styles_two from "../components/FavoriteModal/FavoriteLists/FavoriteList/FavoriteList.module.css";
+import searchResult_styles from "../components/SearchResults/SearchResult/SearchResult.module.css";
+import favlist_styles from "../components/FavoriteModal/FavoriteLists/FavoriteList/FavoriteList.module.css";
 import app_styles from "./App.module.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -94,8 +94,8 @@ class App extends React.Component {
     let id = event.currentTarget.id;
     let className = event.currentTarget.getAttribute("class");
 
-    if (className === styles.SearchResult__container) {
-      let starIcon = document.getElementById(id).getElementsByClassName(styles.SearchResult__header_icon)[0];
+    if (className === searchResult_styles.SearchResult__container) {
+      let starIcon = document.getElementById(id).getElementsByClassName(searchResult_styles.SearchResult__header_icon)[0];
       let starIconColor = starIcon.getAttribute("color");
       if (starIconColor === "#D8D8D8") {
         starIcon.setAttribute("color", "#EDD943");
@@ -104,7 +104,7 @@ class App extends React.Component {
         starIcon.setAttribute("color", "#D8D8D8");
         removeFavoriteItem(id, favoriteArr);
       }
-    } else if (className === styles_two.FavoriteList__container) {
+    } else if (className === favlist_styles.FavoriteList__container) {
       removeFavoriteItem(id, favoriteArr);
     }
     this.setState({ favoritedData: favoriteArr });

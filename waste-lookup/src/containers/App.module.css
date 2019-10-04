@@ -11,21 +11,6 @@ ul {
   padding-left: 34px !important;
 }
 
-.modal-body {
-  overflow: scroll !important;
-}
-
-.modal-content {
-  height: 70vh !important;
-  width: 35vw !important;
-}
-
-.modal {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important; 
-}
-
 .App {
   text-align: center;
   display: flex;
@@ -43,4 +28,8 @@ ul {
 } 
 
 
-
+@media screen and (max-width: 1024px) {
+    .SearchSection__container {
+      width: calc(100% - 3em);
+    }
+  }
