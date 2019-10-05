@@ -23,7 +23,7 @@ ul {
   width: 55vw;
   /* border: 1px solid red; */
   display: flex;
-  height: 85vh;
+  height: 90vh;
   flex-direction: column;
   justify-content: flex-start;
 } 

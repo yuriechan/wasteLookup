@@ -134,6 +134,12 @@ class App extends React.Component {
     return (
       <div className={app_styles.App}>
         <Header />
+        <FavoriteModal
+          starClicked={this.handleStarClick}
+          starColor={this.handleStarColor}
+          data={this.state.data}
+          favoritedData={this.state.favoritedData}
+        />
         <div className={app_styles.SearchSection__container}>
           <SearchBar
             onclick={() => {
@@ -147,12 +153,6 @@ class App extends React.Component {
           />
           {results}
         </div>
-        <FavoriteModal
-          starClicked={this.handleStarClick}
-          starColor={this.handleStarColor}
-          data={this.state.data}
-          favoritedData={this.state.favoritedData}
-        />
       </div>
     );
   }

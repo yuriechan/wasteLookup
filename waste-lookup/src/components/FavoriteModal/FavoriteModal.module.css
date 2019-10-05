@@ -1,12 +1,12 @@
 .FavoriteList__wrapper {
-    height: 5vh;
+    height: 10vh;
     /* border: 1px solid pink; */
     display: flex;
     width: calc(100vw - 10vw);
-    align-items: baseline;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: flex-end;
     position: fixed;
-    bottom: 0;
+    top: 0;
 }
 
 .modal {
