@@ -7,7 +7,7 @@ import Header from "../components/Header/Header";
 import SearchBar from "../components/SearchBar/SearchBar";
 import SearchResults from "../components/SearchResults/SearchResults";
 import FavoriteModal from "../components/FavoriteModal/FavoriteModal";
-import { filterUserInput, filterHTMLEntitity, orderByDescending, removeFavoriteItem } from "../utils/utils";
+import { filterHTMLEntity, orderByDescending, removeFavoriteItem, exactMatch, createObjectArr, addPrefix } from "../utils/utils";
 library.add(faStar);
 
 class App extends React.Component {
@@ -21,7 +21,6 @@ class App extends React.Component {
       favoritedData: [],
     };
     this.search = this.search.bind(this);
-    this.scoringData = this.scoringData.bind(this);
   }
 
   componentDidMount() {
@@ -34,78 +33,6 @@ class App extends React.Component {
       });
   }
 
-  scoringData(data, property, query, arr) {
-    let userInput = filterUserInput(query);
-    let lowerCaseQuery = userInput[0];
-    let lengthOfQuery = userInput[1];
-
-    let matchedArr = arr;
-    let matchingArr = [];
-    for (let i = 0, n = data.length; i < n; i++) {
-      let body = data[i][property];
-      let bodyText = "";
-      if (property === "body") {
-        bodyText = filterHTMLEntitity(body);
-      } else {
-        bodyText = body;
-      }
-
-      let sameChar = false;
-      let scoreAdded = false;
-      let score = 0;
-
-      for (let j = 0, m = bodyText.length; j < m; j++) {
-        if (lowerCaseQuery.charAt(0) === bodyText.charAt(j)) {
-          for (let k = 1, o = lengthOfQuery; k < o; k++) {
-            if (lowerCaseQuery.charAt(k) === bodyText.charAt(j + k)) {
-              sameChar = true;
-            } else {
-              sameChar = false;
-              break;
-            }
-          }
-          if (sameChar) {
-            score = score + 1;
-            scoreAdded = true;
-          }
-        } else {
-          continue;
-        }
-      }
-      if (scoreAdded) {
-        let obj = {};
-        obj[i] = score;
-        matchingArr.push(obj);
-      }
-    }
-
-    for (let g = 0, r = matchingArr.length; g < r; g++) {
-      if (matchedArr.length) {
-        let foundSameKey = false;
-        for (let f = 0, s = matchedArr.length; f < s; f++) {
-          if (Object.keys(matchedArr[f])[0] === Object.keys(matchingArr[g])[0]) {
-            foundSameKey = true;
-          } else {
-            foundSameKey = false;
-          }
-          if (foundSameKey) {
-            let valueOfMatchedItem = matchedArr[f][Object.keys(matchedArr[f])];
-            let valueOfMatchingItem = matchingArr[g][Object.keys(matchingArr[g])];
-            valueOfMatchedItem += valueOfMatchingItem;
-            matchedArr[f][Object.keys(matchedArr[f])] = valueOfMatchedItem;
-            break;
-          }
-        }
-        if (!foundSameKey) {
-          matchedArr.push(matchingArr[g]);
-        }
-      } else {
-        matchedArr.push(matchingArr[g]);
-      }
-    }
-    return matchedArr;
-  }
-
   search(data, query) {
     if (!query.length) {
       this.setState({
@@ -113,21 +40,30 @@ class App extends React.Component {
       });
       return;
     }
-    const context = {
-      body: "body",
-      title: "title",
-      category: "category",
-      keywords: "keywords",
-    };
-    let matchedArr = [];
 
-    let bodyArr = this.scoringData(data, context.body, query, matchedArr);
-    let titleArr = this.scoringData(data, context.title, query, bodyArr);
-    let categoryArr = this.scoringData(data, context.category, query, titleArr);
-    let keywordsArr = this.scoringData(data, context.keywords, query, categoryArr);
-    let totalArr = orderByDescending(keywordsArr);
+    let scoreArr = [];
+    const property = ["body", "category", "title", "keywords"];
+
+    for (let i = 0, n = data.length; i < n; i++) {
+      let score = 0;
+      for (let j = 0, m = property.length; j < m; j++) {
+        let context = null;
+        if (property[j] === "body") {
+          context = filterHTMLEntity(data[i][property[j]]);
+        } else {
+          context = data[i][property[j]];
+        }
+        score = score + exactMatch(query, context);
+        score = score + addPrefix(query, context);
+      }
+      if (score) {
+        scoreArr.push(createObjectArr(i, score));
+      }
+    }
+
+    let scoreDescendingArr = orderByDescending(scoreArr);
     this.setState({
-      matchedData: totalArr,
+      matchedData: scoreDescendingArr,
     });
   }
 
