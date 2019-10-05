@@ -41,5 +41,6 @@ ul {
   }
     .SearchSection__container {
      width: calc(100% - 1em);
+     height: 95vh;
   }
 }

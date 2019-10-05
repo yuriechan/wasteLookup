@@ -24,4 +24,7 @@
     .modal_content {
         width: 100% !important;
     }
+    .FavoriteList__wrapper {
+        height: 5vh;
+    }
 }

@@ -12,3 +12,9 @@
     color: white;
     margin: unset;
 }
+
+@media screen and (max-width: 575px) {
+   .Header__container {
+       height: 5vh;
+   }
+}
