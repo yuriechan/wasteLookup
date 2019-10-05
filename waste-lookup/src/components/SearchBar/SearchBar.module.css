@@ -3,11 +3,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2.5vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
     /* border: 3px solid yellow; */
 }
 
 .SearchBar__wrapper {
     display: flex;
     flex-direction: row;
+}
+
+.SearchBar__inputform {
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+
+.SearchBar__Button {
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
 }

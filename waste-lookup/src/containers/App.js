@@ -3,14 +3,14 @@ import searchResult_styles from "../components/SearchResults/SearchResult/Search
 import favlist_styles from "../components/FavoriteModal/FavoriteLists/FavoriteList/FavoriteList.module.css";
 import app_styles from "./App.module.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "../components/Header/Header";
 import SearchBar from "../components/SearchBar/SearchBar";
 import SearchResults from "../components/SearchResults/SearchResults";
 import FavoriteModal from "../components/FavoriteModal/FavoriteModal";
 import { filterHTMLEntity, orderByDescending, removeFavoriteItem, exactMatch, createObjectArr, addPrefix } from "../utils/utils";
-library.add(faStar);
+library.add(faStar, faTrashAlt);
 
 class App extends React.Component {
   constructor(props) {

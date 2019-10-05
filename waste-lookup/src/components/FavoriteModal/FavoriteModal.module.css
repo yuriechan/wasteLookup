@@ -1,9 +1,9 @@
 .FavoriteList__wrapper {
-    height: 10vh;
+    height: 5vh;
     /* border: 1px solid pink; */
     display: flex;
     width: calc(100vw - 10vw);
-    align-items: center;
+    align-items: baseline;
     justify-content: flex-start;
     position: fixed;
     bottom: 0;
@@ -17,10 +17,11 @@
 
 .modal_content {
     height: 70vh !important;
+    width: calc(100vw - 3rem) !important;
   }
 
-@media screen and (min-width: 575px) {
+@media screen and (max-width: 575px) {
     .modal_content {
-        width: 50vw !important;
+        width: 100% !important;
     }
 }

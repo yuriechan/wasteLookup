@@ -14,6 +14,7 @@ class SearchBar extends React.Component {
       <div className={styles.SearchBar__container}>
         <InputGroup className={styles.SearchBar__wrapper}>
           <Input
+            className={styles.SearchBar__inputform}
             type="text"
             placeholder="search"
             onChange={this.props.onchange}
@@ -21,7 +22,7 @@ class SearchBar extends React.Component {
             value={this.props.value}
           />
           <InputGroupAddon addonType="append">
-            <Button onClick={this.props.onclick}>
+            <Button onClick={this.props.onclick} className={styles.SearchBar__Button}>
               <FontAwesomeIcon icon={faSearch} />
             </Button>
           </InputGroupAddon>
