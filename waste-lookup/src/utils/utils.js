@@ -1,7 +1,8 @@
 export function decodeHtmlEntity(html) {
   let txt = document.createElement("textarea");
   txt.innerHTML = html;
-  return { __html: txt.value };
+  let filteredTxt = txt.value.replace(/&nbsp;/g, " ");
+  return { __html: filteredTxt };
 }
 
 export function filterUserInput(query) {
