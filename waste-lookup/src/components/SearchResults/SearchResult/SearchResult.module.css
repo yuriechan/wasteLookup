@@ -43,8 +43,12 @@
       padding: 10px;
     }
 
+    .SearchResult__body > ul > li > span{ 
+      font-size: 0.75rem !important;
+    }
+
     .SearchResult__header {
-        padding-left: 0px;
+      padding-left: 0px;
     }
 
     .SearchResult__header_title {
