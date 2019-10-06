@@ -4,6 +4,10 @@
     flex-direction: column;
     align-items: baseline;
     padding: 15px;
+    margin: 0.75em;
+    border-radius: 15px;
+    padding: 1.75em;
+    box-shadow: 0 0 10px #ccc;
 }
 
 .FavoriteList__header {
@@ -20,5 +24,9 @@
 @media screen and (max-width: 575px) {
     .FavoriteList__container {
       font-size: 0.75rem;
+      background-color: rgb(255,250,205,0.9);
+    }
+    .FavoriteList__header_icon {
+      display: none;
     }
   }

@@ -92,18 +92,23 @@ class App extends React.Component {
     let favoriteArr = this.state.favoritedData;
     let id = event.currentTarget.id;
     let className = event.currentTarget.getAttribute("class");
-
-    if (className === searchResult_styles.SearchResult__container) {
+    let targetClassList = event.currentTarget.classList;
+    let resultContainer = document.getElementById(id);
+    if (targetClassList.contains(searchResult_styles.SearchResult__container)) {
       let starIcon = document.getElementById(id).getElementsByClassName(searchResult_styles.SearchResult__header_icon)[0];
+
       let starIconColor = starIcon.getAttribute("color");
       if (starIconColor === "#D8D8D8") {
         starIcon.setAttribute("color", "#EDD943");
+        resultContainer.classList.add(searchResult_styles.favorited);
         favoriteArr.push(id);
       } else if (starIconColor === "#EDD943") {
         starIcon.setAttribute("color", "#D8D8D8");
+        resultContainer.classList.remove(searchResult_styles.favorited);
         removeFavoriteItem(id, favoriteArr);
       }
     } else if (className === favlist_styles.FavoriteList__container) {
+      resultContainer.classList.remove(searchResult_styles.favorited);
       removeFavoriteItem(id, favoriteArr);
     }
     this.setState({ favoritedData: favoriteArr });

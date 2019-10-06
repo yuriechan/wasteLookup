@@ -41,7 +41,12 @@
     .SearchResult__container {
       font-size: 0.75rem;
       padding: 10px;
-    }
+      transition: none;
+    }    
+
+    .SearchResult__container:hover {
+      background-color: transparent;
+    } 
 
     .SearchResult__body > ul > li > span{ 
       font-size: 0.75rem !important;
@@ -51,7 +56,18 @@
       padding-left: 0px;
     }
 
+    .SearchResult__header_icon {
+      display: none;
+    }
+
     .SearchResult__header_title {
       font-size: larger;
+    }
+
+    .favorited {
+      background-color: rgb(255,250,205,0.9);
+    }
+    .favorited:hover {
+      background-color: rgb(255,250,205,0.9);
     }
   }
