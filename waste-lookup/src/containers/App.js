@@ -8,7 +8,6 @@ import { faStar, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/Header/Header";
 import SearchBar from "../components/SearchBar/SearchBar";
 import SearchResults from "../components/SearchResults/SearchResults";
-import FavoriteModal from "../components/FavoriteModal/FavoriteModal";
 import { filterHTMLEntity, orderByDescending, removeFavoriteItem, exactMatch, createObjectArr, addPrefix } from "../utils/utils";
 library.add(faStar, faTrashAlt);
 
@@ -133,12 +132,11 @@ class App extends React.Component {
     }
     return (
       <div className={app_styles.App}>
-        <Header />
-        <FavoriteModal
+        <Header
+          favoritedData={this.state.favoritedData}
           starClicked={this.handleStarClick}
           starColor={this.handleStarColor}
           data={this.state.data}
-          favoritedData={this.state.favoritedData}
         />
         <div className={app_styles.SearchSection__container}>
           <SearchBar

@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "./Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FavoriteModal from "../FavoriteModal/FavoriteModal";
 
 class Header extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       width: window.innerWidth,
     };
@@ -30,6 +31,12 @@ class Header extends React.Component {
     return (
       <header className={styles.Header__container}>
         <h3 className={styles.Header__text}>{headerContent}</h3>
+        <FavoriteModal
+          favoritedData={this.props.favoritedData}
+          starClicked={this.props.starClicked}
+          starColor={this.props.starColor}
+          data={this.props.data}
+        />
       </header>
     );
   }

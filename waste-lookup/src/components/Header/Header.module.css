@@ -11,10 +11,11 @@
 .Header__text {
     color: white;
     margin: unset;
+    width: 80%;
 }
 
 @media screen and (max-width: 575px) {
-   .Header__container {
+   /* .Header__container {
        height: 5vh;
-   }
+   } */
 }
