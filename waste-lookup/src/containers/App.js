@@ -94,10 +94,9 @@ class App extends React.Component {
     let className = event.currentTarget.getAttribute("class");
     let targetClassList = event.currentTarget.classList;
     let resultContainer = document.getElementById(id);
+    let starIcon = document.getElementById(id).getElementsByClassName(searchResult_styles.SearchResult__header_icon)[0];
+    let starIconColor = starIcon.getAttribute("color");
     if (targetClassList.contains(searchResult_styles.SearchResult__container)) {
-      let starIcon = document.getElementById(id).getElementsByClassName(searchResult_styles.SearchResult__header_icon)[0];
-
-      let starIconColor = starIcon.getAttribute("color");
       if (starIconColor === "#D8D8D8") {
         starIcon.setAttribute("color", "#EDD943");
         resultContainer.classList.add(searchResult_styles.favorited);

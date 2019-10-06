@@ -62,6 +62,7 @@
 
     .SearchResult__header_title {
       font-size: larger;
+      padding-left: 15px;
     }
 
     .favorited {
